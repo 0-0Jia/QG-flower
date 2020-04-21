@@ -39,7 +39,6 @@ export default {
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-  /* background-color: #F6FAFF; */
 }
 /* this rule will be remove */
 * {
