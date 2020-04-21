@@ -1,3 +1,9 @@
+<style>
+.card {
+  padding: 10px;
+}
+</style>
+
 <template>
   <div>
     <p class="card">
@@ -12,8 +18,3 @@ export default {
 }
 </script>
 
-<style>
-.card {
-  padding: 10px;
-}
-</style>
