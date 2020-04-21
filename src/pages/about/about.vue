@@ -1,5 +1,5 @@
 <style scoped>
-.day {
+.about {
   width: 100%;
 }
 .title {
@@ -12,27 +12,25 @@
 </style>
 
 <template>
-  <div class="day">
-    <h1 class="title">一日一花</h1>
+    <div class="about">
+    <h1 class="title">关于种花</h1>
     <div></div>
   </div>
 </template>
 
 <script>
-// import card from "@/components/card";
 
 export default {
-  data() {
-    return {};
+  data () {
+    return {
+     
+    }
   },
 
 
-  // components: {
-  //   card
-  // },
+  methods: {
+ 
+  },
 
-  methods: {}
-};
+}
 </script>
-
-
