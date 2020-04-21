@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main"
+    "pages/about/main",
+    "pages/recommend/main",
+    "pages/diary/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,32 +14,32 @@
   "tabBar": {
     "color": "#999",
     "backgroundColor": "#fafafa",
-    "selectedColor": "#333",
+    "selectedColor": "#2CD18A",
     "borderStyle": "white",
 
     "list": [{
-      "text": "首页",
+      "text": "一日一花",
       "pagePath": "pages/index/main",
-      "iconPath": "static/tabs/home.png",
-      "selectedIconPath": "static/tabs/home-active.png"
+      "iconPath": "static/tabs/day.png",
+      "selectedIconPath": "static/tabs/day-selected.png"
     }, {
-      "text": "订单",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
+      "text": "关于种花",
+      "pagePath": "pages/about/main",
+      "iconPath": "static/tabs/about.png",
+      "selectedIconPath": "static/tabs/about-selected.png"
+    }, {
+      "text": "送花推荐",
+      "pagePath": "pages/recommend/main",
+      "iconPath": "static/tabs/recommend.png",
+      "selectedIconPath": "static/tabs/recommend-selected.png"
+    }, {
+      "text": "种花日记",
+      "pagePath": "pages/diary/main",
+      "iconPath": "static/tabs/diary.png",
+      "selectedIconPath": "static/tabs/diary-selected.png"
     }],
 
-    "items": [{
-      "name": "首页",
-      "pagePath": "pages/index/main",
-      "icon": "static/tabs/home.png",
-      "activeIcon": "static/tabs/home-active.png"
-    }, {
-      "name": "订单",
-      "pagePath": "pages/logs/main",
-      "icon": "static/tabs/orders.png",
-      "activeIcon": "static/tabs/orders-active.png"
-    }],
+  
     "position": "bottom"
   }
 }

@@ -1,5 +1,5 @@
 <style scoped>
-.day {
+.diary {
   width: 100%;
 }
 .title {
@@ -12,26 +12,26 @@
 </style>
 
 <template>
-  <div class="day">
-    <h1 class="title">一日一花</h1>
+    <div class="diary">
+    <h1 class="title">种花日记</h1>
     <div></div>
   </div>
 </template>
 
 <script>
-// import card from "@/components/card";
+
 
 export default {
-  data() {
-    return {};
+  data () {
+    return {
+     
+    }
   },
 
-  // components: {
-  //   card
-  // },
 
-  methods: {}
-};
+  methods: {
+ 
+  },
+
+}
 </script>
-
-
