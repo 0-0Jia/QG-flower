@@ -22,8 +22,8 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wxbfb3532465d11dc2",
-	"projectname": "flower",
+	"appid": "wx2921682382b03a55",
+	"projectname": "QG-flower",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
