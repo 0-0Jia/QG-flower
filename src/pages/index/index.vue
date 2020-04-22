@@ -26,7 +26,6 @@ export default {
     return {};
   },
 
-
   // components: {
   //   card
   // },

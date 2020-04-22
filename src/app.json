@@ -3,7 +3,10 @@
     "pages/index/main",
     "pages/about/main",
     "pages/recommend/main",
-    "pages/diary/main"
+    "pages/diary/main",
+    "pages/about/aboutDetail/main",
+    "pages/about/search/main",
+    "pages/recommend/reDetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
