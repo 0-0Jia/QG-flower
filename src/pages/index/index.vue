@@ -26,13 +26,14 @@ export default {
     return {};
   },
 
-
   // components: {
   //   card
   // },
 
   methods: {}
 };
+
 </script>
+
 
 
