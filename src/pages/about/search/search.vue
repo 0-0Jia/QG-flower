@@ -162,6 +162,7 @@ export default {
       mpvue.navigateBack({
           delta: 1
       });
+      
     // wx.switchTab({
     //     url: "../../../pages/about/main"
     // })

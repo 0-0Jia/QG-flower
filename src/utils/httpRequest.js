@@ -57,6 +57,7 @@ function post (obj) {
 function Delete (obj) {
   return request(obj.url, 'DELETE', obj.data)
 }
+
 export default {
   request,
   get,
