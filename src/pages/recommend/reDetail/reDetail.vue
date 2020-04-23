@@ -24,6 +24,7 @@
 }
 .content {
   padding: 2px 8px;
+  background-color: white;
   box-shadow: 0 0 5px silver;
   border-radius: 4px;
 }

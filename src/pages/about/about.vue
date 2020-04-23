@@ -141,6 +141,7 @@
   color: #00000080;
 }
 
+/*筛选区域*/
 .select-area {
   position: absolute;
   top: 2vh;
@@ -171,6 +172,10 @@
   margin: 3px 9px;
   font-size: 14px;
   font-weight: 600;
+  color: black;
+}
+.select-item:hover {
+  color: #2cd18a;
 }
 
 .select-button-container {
@@ -212,6 +217,7 @@
             class="select-item"
             v-for="(category, index) in selectList1"
             :key="index"
+            @click="chooseItem"
           >{{category.item}}</div>
         </div>
         <div class="select-option">
@@ -220,6 +226,7 @@
             class="select-item"
             v-for="(category, index) in selectList2"
             :key="index"
+             @click="chooseItem"
           >{{category.item}}</div>
         </div>
         <div class="select-option">
@@ -228,6 +235,7 @@
             class="select-item"
             v-for="(category, index) in selectList3"
             :key="index"
+             @click="chooseItem"
           >{{category.item}}</div>
         </div>
         <div class="select-option">
@@ -236,6 +244,7 @@
             class="select-item"
             v-for="(category, index) in selectList4"
             :key="index"
+             @click="chooseItem"
           >{{category.item}}</div>
         </div>
       </div>
@@ -388,6 +397,9 @@ export default {
         this.moveRight = 0;
         this.viewHeight = "";
       }
+    },
+    chooseItem(){
+      this.fontColor = "2cd18a";
     }
   },
 
