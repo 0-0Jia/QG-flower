@@ -1,6 +1,71 @@
+<style scoped>
+.recommend {
+  width: 100%;
+  padding: 1px 0;
+  background-color: #f6faff;
+}
+.title {
+  width: 90%;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 5% auto;
+  margin-bottom: 1%;
+  text-align: left;
+}
+
+/*瀑布流*/
+.main {
+  width: 100%;
+  height: 100%;
+}
+.view {
+  display: inline-block !important;
+  position: relative;
+  vertical-align: top;
+  width: 50%;
+}
+.content {
+  position: relative;
+  box-shadow: 0 0 5px silver;
+  border-radius: 5px;
+}
+/*图片*/
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+/*遮罩层*/
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(41, 41, 41, 0.3);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  z-index: 10;
+}
+.rec-desc {
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  bottom: 9%;
+  line-height: 20px;
+  text-align: center;
+}
+.option {
+  font-size: 16px;
+}
+.eng-desc {
+  font-size: 12px;
+  font-weight: 300;
+}
+</style>
+
 <template>
   <div class="recommend">
-    <h1 class="title">关于种花</h1>
+    <h1 class="title">送花推荐</h1>
     <div style="display: none">
       <img
         v-for="(item, index) in dataList"
@@ -23,41 +88,35 @@
           class="content"
           v-for="(item, index) in firstList"
           :key="index"
-          :style="{ width: imgWidth+'px', height:(item.height + 55)+'px', marginTop: imgMargin+'px',marginLeft:imgMargin + 'px'}"
+          :style="{ width: imgWidth+'px', height:(item.height)+'px', marginTop: imgMargin+'px',marginLeft:imgMargin + 'px'}"
         >
-          <div class="flower-name">{{item.name}}</div>
           <div class="img-content" :style="{height:item.height + 'px'}">
-            <img
-              :src="item.src"
-              class="image"
-              :data-index="index"
-              data-type="1"
-              @click="previewImg"
-              alt=""
-            >
+            <img :src="item.src" class="image" :data-index="index" data-type="1" alt="">
           </div>
-          <div class="flower-meaning">{{item.meaning}}</div>
+          <div class="mask" :style="{ width: imgWidth+'px', height:(item.height)+'px'}">
+            <div class="rec-desc">
+              <p class="option">{{item.option}}</p>
+              <p class="eng-desc">{{item.engDesc}}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="view">
         <div
           class="content"
           v-for="(item, index) in secondList"
-          :style="{marginLeft:(imgMargin/2)+'px', width: imgWidth+'px', height:(item.height + 55)+'px',marginTop: imgMargin+'px'}"
+          :style="{marginLeft:(imgMargin/2)+'px', width: imgWidth+'px', height:(item.height)+'px',marginTop: imgMargin+'px'}"
           :key="index"
         >
-          <div class="flower-name">{{item.name}}</div>
           <div class="img-content" :style="{height:item.height+'px'}">
-            <img
-              :src="item.src"
-              class="image"
-              :data-index="index"
-              data-type="2"
-              @click="previewImg"
-              alt=""
-            >
+            <img :src="item.src" class="image" :data-index="index" data-type="2" alt="">
           </div>
-          <div class="flower-meaning">{{item.meaning}}</div>
+          <div class="mask" :style="{ width: imgWidth+'px', height:(item.height)+'px'}">
+            <div class="rec-desc">
+              <p class="option">{{item.option}}</p>
+              <p class="eng-desc">{{item.engDesc}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </scroll-view>
@@ -65,9 +124,8 @@
 </template>
 
 <script>
-
 export default {
-  name: "flow",
+  name: "recommend",
   data() {
     return {
       dataList: [], // 数据源
@@ -75,7 +133,7 @@ export default {
       secondList: [], // 第二列数组
       windowWidth: 0, // 页面视图宽度
       windowHeight: 0, // 视图高度
-      imgMargin: 10, // 图片边距: 单位px
+      imgMargin: 16, // 图片边距: 单位px
       imgWidth: 0, // 图片宽度: 单位px
       topArr: [0, 0] // 存储每列的累积top
     };
@@ -119,63 +177,55 @@ export default {
       let index;
       let imgs = [
         {
-          src: require("../../../static/images/flower1.png"),
-          name: "花花1",
-          meaning: "花语1"
+          src: require("../../../static/images/rec.jpg"),
+          option: "花花1",
+          engDesc: "for your friends"
         },
         {
-          src: require("../../../static/images/flower2.png"),
-          name: "花花2",
-          meaning: "花语2"
+          src: require("../../../static/images/rec.jpg"),
+          option: "花花2",
+          engDesc: "for your friends"
         },
         {
-          src: require("../../../static/images/flower3.png"),
-          name: "花花3",
-          meaning: "花语3"
+          src: require("../../../static/images/rec.jpg"),
+          option: "花花3",
+          engDesc: "for your friends"
         },
         {
-          src: require("../../../static/images/flower4.png"),
-          name: "花花4",
-          meaning: "花语4"
+          src: require("../../../static/images/rec.jpg"),
+          option: "花花4",
+          engDesc: "for your friends"
         },
         {
-          src: require("../../../static/images/flower5.png"),
-          name: "花花5",
-          meaning: "花语5"
+          src: require("../../../static/images/rec.jpg"),
+          option: "花花5",
+          engDesc: "for your friends"
         }
-
       ];
-
-      // for (let i = 0; i < 1; i++) {
-      //   let randomNum = Math.random() * 100;
-      //   index = parseInt(randomNum) % imgs.length;
-      //   imgs[index].height = 0;
-      //   imgs.splice(index, 1);
-      // }
       this.dataList = imgs;
       wx.hideLoading();
-    },
-    /** 预览图片 */
-    previewImg: function(e) {
-      console.log(this.firstList[index])
-      console.log("000")
-      let index = e.currentTarget.dataset.index;
-      let currentSrc = "";
-      switch (e.currentTarget.dataset.type) {
-        case "1":
-          currentSrc = this.firstList[index].src;
-          break;
-        case "2":
-          currentSrc = this.secondList[index].src;
-      }
-      wx.previewImage({
-        urls: [currentSrc]
-      });
     },
     // 进入详情页面
     toDetail() {
       console.log("...");
       mpvue.navigateTo({ url: "../recommend/reDetail/main" });
+    },
+
+    /**
+     * 请求
+     */
+    request() {
+      that.$wxhttp
+        .post({
+          url: "/xxx/xxx",
+          data: data
+        })
+        .then(res => {
+          console.log("成功数据:", res);
+        })
+        .catch(err => {
+          console.log(`自动请求api失败 err:`, err);
+        });
     }
   },
   onLoad() {
@@ -190,7 +240,7 @@ export default {
         let windowWidth = res.windowWidth;
         let imgMargin = that.imgMargin;
         // 两列，每列的图片宽度
-        let imgWidth = (windowWidth - imgMargin * 3 - 12) / 2;
+        let imgWidth = (windowWidth - imgMargin * 3) / 2;
         that.windowWidth = windowWidth;
         that.windowHeight = res.windowHeight;
         that.imgWidth = imgWidth;
@@ -201,49 +251,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.recommend {
-  width: 100%;
-}
-.title {
-  width: 90%;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 5% auto;
-  text-align: left;
-}
-
-.main {
-  width: 100%;
-  height: 100%;
-}
-.view {
-  display: inline-block !important;
-  position: relative;
-  vertical-align: top;
-  width: 50%;
-}
-.content {
-  padding: 2px 6px;
-  box-shadow: 0 0 5px silver;
-  border-radius: 4px;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  border-top-right-radius: 4px;
-  border-top-left-radius: 4px;
-}
-
-.flower-name {
-  margin: 2px auto;
-  text-align: center;
-}
-
-.flower-meaning {
-  margin: 0 auto;
-  margin-top: 2px;
-  text-align: left;
-}
-</style>
