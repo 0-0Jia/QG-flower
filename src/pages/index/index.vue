@@ -14,21 +14,33 @@
 <template>
   <div class="day">
     <h1 class="title">一日一花</h1>
-    <div></div>
+    <card :cardList='cardList'></card>
   </div>
 </template>
 
 <script>
-// import card from "@/components/card";
+import card from "./card/card.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      cardList: [
+        {
+          name: '1'
+        },
+        {
+          name: '2'
+        },
+        {
+          name: '3'
+        }
+      ]
+    };
   },
 
-  // components: {
-  //   card
-  // },
+  components: {
+    card
+  },
 
   methods: {}
 };
