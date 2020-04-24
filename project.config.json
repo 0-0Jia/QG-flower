@@ -23,7 +23,7 @@
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
 	"appid": "wx2921682382b03a55",
-	"projectname": "QG-flower",
+	"projectname": "flower",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {
@@ -35,13 +35,42 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "推荐模块",
+					"pathName": "pages/recommend/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于模块",
+					"pathName": "pages/about/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索模块",
+					"pathName": "pages/about/search/main",
+					"scene": null
+				}
+			]
 		}
 	}
 }
