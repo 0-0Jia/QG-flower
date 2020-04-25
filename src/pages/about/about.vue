@@ -53,7 +53,7 @@
   width: 82%;
   font-size: 25px;
   font-weight: 500;
-  margin: 5% auto;
+  margin: 0.5em auto;
   text-align: left;
 }
 

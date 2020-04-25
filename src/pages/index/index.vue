@@ -1,12 +1,17 @@
 <style scoped>
 .day {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background-color: #f6faff;
 }
 .title {
   width: 90%;
   font-size: 25px;
   font-weight: 500;
-  margin: 5% auto;
+  margin: 0.5em auto;
   text-align: left;
 }
 .cardCon {

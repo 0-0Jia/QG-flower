@@ -8,7 +8,7 @@
   width: 90%;
   font-size: 25px;
   font-weight: 500;
-  margin: 5% auto;
+  margin: 0.5em auto;
   margin-bottom: 1%;
   text-align: left;
 }
