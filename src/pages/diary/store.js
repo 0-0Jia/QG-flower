@@ -4,19 +4,24 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  state: {
-    count: 0
-  },
-  mutations: {
-    increment: (state) => {
-      let obj = state
-      obj.count += 1
+    state: {
+        type: false, // false-> 编辑, true-> 添加
+        data: null
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    mutations: {
+        edit: (state) => {
+            let obj = state
+            obj.type = false
+        },
+        add: (state) => {
+            const obj = state
+            obj.type = true
+        },
+        changeDate: (state, result) => {
+            const obj = state
+            obj.data = result
+        }
     }
-  }
 })
 
 export default store

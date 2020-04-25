@@ -93,7 +93,7 @@ export default {
         type: '观花类',
         recommend: '婚礼鲜花'
       },
-      showIndex: 1,
+      showIndex: 0,
       touchStartX: null,
       touchEndX: null
     };
@@ -135,7 +135,8 @@ export default {
       }
       console.log(this.showIndex);
     }
-  }
+  },
+  created() {console.log("test")}
 };
 </script>
 
