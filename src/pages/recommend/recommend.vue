@@ -81,7 +81,6 @@
       scroll-y="true"
       :style="{height:windowHeight+'px'}"
       @scrolltolower="loadMoreImages"
-      @click="toDetail"
     >
       <div class="view">
         <div
@@ -89,6 +88,7 @@
           v-for="(item, index) in firstList"
           :key="index"
           :style="{ width: imgWidth+'px', height:(item.height)+'px', marginTop: imgMargin+'px',marginLeft:imgMargin + 'px'}"
+          @click="toDetail(item.option)"
         >
           <div class="img-content" :style="{height:item.height + 'px'}">
             <img :src="item.src" class="image" :data-index="index" data-type="1" alt="">
@@ -107,6 +107,7 @@
           v-for="(item, index) in secondList"
           :style="{marginLeft:(imgMargin/2)+'px', width: imgWidth+'px', height:(item.height)+'px',marginTop: imgMargin+'px'}"
           :key="index"
+          @click="toDetail(item.option)"
         >
           <div class="img-content" :style="{height:item.height+'px'}">
             <img :src="item.src" class="image" :data-index="index" data-type="2" alt="">
@@ -177,45 +178,69 @@ export default {
       let index;
       let imgs = [
         {
-          src: require("../../../static/images/rec.jpg"),
-          option: "花花1",
+          src: "https://s1.ax1x.com/2020/05/09/YlJBB4.png",
+          option: "友情鲜花",
           engDesc: "for your friends"
         },
         {
-          src: require("../../../static/images/rec.jpg"),
-          option: "花花2",
-          engDesc: "for your friends"
+          src: "https://s1.ax1x.com/2020/05/09/YlJdjU.png",
+          option: "爱情鲜花",
+          engDesc: "for your love"
         },
         {
-          src: require("../../../static/images/rec.jpg"),
-          option: "花花3",
-          engDesc: "for your friends"
+          src: "https://s1.ax1x.com/2020/05/09/YlJU3V.png",
+          option: "道歉鲜花",
+          engDesc: "for apology"
         },
         {
-          src: require("../../../static/images/rec.jpg"),
-          option: "花花4",
-          engDesc: "for your friends"
+          src: "https://s1.ax1x.com/2020/05/09/YlJ0uF.png",
+          option: "哀思鲜花",
+          engDesc: "show your grief"
         },
         {
-          src: require("../../../static/images/rec.jpg"),
-          option: "花花5",
-          engDesc: "for your friends"
+          src: "https://s1.ax1x.com/2020/05/09/YlJacT.png",
+          option: "感谢老师",
+          engDesc: "appreciate teacher"
+        },
+        {
+          src: "https://s1.ax1x.com/2020/05/09/YlJDHJ.png",
+          option: "婚庆鲜花",
+          engDesc: "for wedding"
+        },
+        {
+          src: "https://s1.ax1x.com/2020/05/09/YlJyNR.png",
+          option: "生日鲜花",
+          engDesc: "birthday presents"
+        },
+        {
+          src: "https://s1.ax1x.com/2020/05/09/YlJsE9.png",
+          option: "问候长辈",
+          engDesc: "for elder"
+        },
+        {
+          src: "https://s1.ax1x.com/2020/05/09/YlJ641.png",
+          option: "探病慰问",
+          engDesc: "hospital flower"
+        },
+        {
+          src: "https://s1.ax1x.com/2020/05/09/YlJg9x.png",
+          option: "祝福庆贺",
+          engDesc: "for celebration"
         }
       ];
       this.dataList = imgs;
       wx.hideLoading();
     },
     // 进入详情页面
-    toDetail() {
-      console.log("...");
-      mpvue.navigateTo({ url: "../recommend/reDetail/main" });
+    toDetail(type) {
+      mpvue.navigateTo({ url: "../recommend/reDetail/main?type=" + type });
     },
 
     /**
      * 请求
      */
     request() {
-      that.$wxhttp
+      this.$wxhttp
         .post({
           url: "/xxx/xxx",
           data: data
@@ -249,6 +274,5 @@ export default {
     });
   }
 };
-
 </script>
 

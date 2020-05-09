@@ -1,5 +1,5 @@
 // 接口地址
-const host = '' 
+const host = 'http://39.98.41.126:10021/flower/api/v1/' 
  
 function request (url, method, data, header = {}) {
   wx.showLoading({
@@ -13,27 +13,22 @@ function request (url, method, data, header = {}) {
       method: method,
       data: data,
       header: 
-      url === '/customer/login' // 通过传进来的url判断是否是登陆页
-      ?{
-        'content-type': 'application/json',
-      } 
-      :{
-        'content-type': 'application/json',
-        'cookie': cookie
-      },
-      // {
-      //   'content-type': 'application/json', // 默认值
+      // url
+      //  === '/customer/login' // 通过传进来的url判断是否是登陆页
+      // ?{
+      //   'content-type': 'application/json',
+      // } 
+      // :{
+      //   'content-type': 'application/json',
       //   'cookie': cookie
       // },
+      {
+        'content-type': 'application/json', // 默认值
+        'cookie': cookie
+      },
       success: function (res) {
         wx.hideLoading()
-        if(url === '/customer/login'|| url === '/customer/money'){
-          resolve(res)
-        }else{
           resolve(res.data)
-        }
-        resolve(res)
-        
       },
       fail: function (res) {
         wx.hideLoading()

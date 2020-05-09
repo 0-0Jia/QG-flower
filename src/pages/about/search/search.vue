@@ -50,6 +50,27 @@
   padding: 5px 15px;
 }
 
+.fuzzy-item-container {
+  position: absolute;
+  top: 36px;
+  left: 4%;
+  width: 83%;
+  height: 208px;
+  overflow: auto;
+  border: 1px solid rgba(170, 169, 169, 0.493);
+  z-index: 100;
+}
+.fuzzy-item {
+  position: relative;
+  width: 95%;
+  height: 26px;
+  padding: 3px 0;
+  padding-left: 5%;
+  font-size: 16px;
+  background-color: white;
+  border-bottom: 1px solid rgba(194, 193, 193, 0.39);
+}
+
 .cancel {
   position: absolute;
   top: 5px;
@@ -85,88 +106,203 @@
   font-weight: 600;
   color: #00000080;
 }
+
+.null-remind {
+  width: 100%;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: rgba(83, 83, 83, 0.493);
+}
 </style>
 
 <template>
-    <div class="search">
-        <div class="container-one">
-            <div class="search-container">
-                <input class="search-input">
-                <img src="../../../../static/images/search.png" alt="搜索" class="searchIcon">
-            </div>
-            <div class="cancel" @click="toAbout">取消</div>
+  <div class="search">
+    <div class="container-one">
+      <div class="search-container">
+        <input
+          class="search-input"
+          v-model="flowerName"
+          placeholder="输入花名进行搜索"
+          @input="fuzzySearch"
+        >
+        <img src="../../../../static/images/search.png" alt="搜索" class="searchIcon">
+        <div class="fuzzy-item-container" v-if="fuzzyShow">
+          <div
+            class="fuzzy-item"
+            v-for="(fuzzyItem, index) in fuzzyList"
+            :key="index"
+            @click="toDetail(fuzzyItem.flowerId)"
+          >{{fuzzyItem.name}}</div>
         </div>
-        <div class="container-two">
-            <div class="select-flower">
-                <div class="select-title">
-                    <h1>热门花卉</h1>
-                    <img src="../../../../static/images/hot.png" class="icon">
-                </div>
-                <div class="search-all-item">
-                    <div
-                        class="search-item"
-                        v-for="(flower, index) in hotList"
-                        :key="index"
-                    >{{flower.item}}</div>
-                </div>
-            </div>
-            <div class="select-flower">
-                <div class="select-title">
-                    <h1>搜索历史</h1>
-                    <img src="../../../../static/images/history.png" class="icon">
-                    <img src="../../../../static/images/delete.png" class="delete-icon">
-                </div>
-                <div class="search-all-item">
-                    <div
-                        class="search-item"
-                        v-for="(flower, index) in historyList"
-                        :key="index"
-                    >{{flower.item}}</div>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div class="cancel" @click="toAbout">取消</div>
     </div>
+    <div class="container-two">
+      <div class="select-flower">
+        <div class="select-title">
+          <h1>热门花卉</h1>
+          <img src="../../../../static/images/hot.png" class="icon">
+        </div>
+        <div class="search-all-item">
+          <div class="null-remind" v-if="!haveHot">暂无热门搜索</div>
+          <div
+            class="search-item"
+            v-for="(flower, index) in hotList"
+            :key="index"
+            @click="toDetail(flower.flowerId)"
+          >{{flower.name}}</div>
+        </div>
+      </div>
+      <div class="select-flower">
+        <div class="select-title">
+          <h1>搜索历史</h1>
+          <img src="../../../../static/images/history.png" class="icon">
+          <img
+            src="../../../../static/images/delete.png"
+            class="delete-icon"
+            @click="deleteHistory"
+          >
+        </div>
+        <div class="search-all-item">
+          <div class="null-remind" v-if="!haveHistory">暂无搜索历史</div>
+          <div
+            class="search-item"
+            v-for="(flower, index) in historyList"
+            :key="index"
+            @click="searchByName"
+          >{{flower.item}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      hotList: [
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "玫瑰" }
-      ],
-      historyList: [
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "茉莉花" },
-        { item: "玫瑰" },
-        { item: "玫瑰" }
-      ]
+      flowerName: "",
+      fuzzyList: [],
+      hotList: [],
+      historyList: [],
+      haveHot: false,
+      haveHistory: false,
+      fuzzyShow: false
     };
   },
 
   methods: {
     toAbout() {
+      this.fuzzyShow = false;
       mpvue.navigateBack({
-          delta: 1
+        delta: 1
       });
-      
-    // wx.switchTab({
-    //     url: "../../../pages/about/main"
-    // })
+
+      // wx.switchTab({
+      //     url: "../../../pages/about/main"
+      // })
+    },
+    fuzzySearch() {
+      this.fuzzyShow = false;
+      this.fuzzyList = [];
+      //模糊搜索
+      this.$wxhttp
+        .get({
+          url: "/flower/name",
+          data: {
+            name: this.flowerName
+          }
+        })
+        .then(res => {
+          console.log("成功数据:", res);
+          this.fuzzyList = res.data;
+          this.fuzzyShow = true;
+        })
+        .catch(err => {
+          console.log(`自动请求api失败 err:`, err);
+        });
+    },
+    toDetail(flowerId) {
+      console.log(flowerId)
+      this.flowerStorage();
+      mpvue.navigateTo({
+        url: "../aboutDetail/main?flowerId=" + flowerId
+      });
+      this.fuzzyShow = false;
+    },
+    searchByName() {
+      this.fuzzyShow = false;
+
+      this.toDetail();
+    },
+    deleteHistory() {
+      let that = this;
+      if (this.historyList.length != 0) {
+        wx.showModal({
+          title: "提示",
+          content: "确定删除历史记录吗？(ಥ_ಥ)",
+          success(res) {
+            if (res.confirm) {
+              console.log("用户点击确定");
+              that.historyList = [];
+              wx.removeStorageSync("historySearch");
+              that.haveHistory = false;
+            } else if (res.cancel) {
+              console.log("用户点击取消");
+            }
+          }
+        });
+      }
+    },
+    flowerStorage() {
+      let flag = true;
+      for (let i = 0; i < this.historyList.length; i++) {
+        if (this.historyList[i].item == this.flowerName) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        this.historyList.push({ item: this.flowerName });
+      }
+      flag = true;
+
+      // 搜索历史本地缓存
+      wx.setStorage({
+        key: "historySearch",
+        data: this.historyList
+      });
     }
+  },
+
+  mounted() {
+    // 获取搜索历史本地缓存
+    wx.getStorage({
+      key: "historySearch",
+      success: res => {
+        console.log(res);
+        if (res.data != null) {
+          this.haveHistory = true;
+          this.historyList = res.data;
+        }
+      }
+    });
+
+    // 获取热门花卉
+    this.$wxhttp
+      .get({
+        url: "/flower/hot"
+      })
+      .then(res => {
+        console.log("成功数据:", res);
+        if (res.data != null) {
+          this.haveHot = true;
+          this.hotList = res.data;
+        }
+      })
+      .catch(err => {
+        console.log(`自动请求api失败 err:`, err);
+      });
   }
 };
 </script>

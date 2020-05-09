@@ -7,7 +7,7 @@
 .flower-pic {
   width: 100%;
   height: 250px;
-  background-image: url("https://s1.ax1x.com/2020/04/22/JN7PmT.png");
+  /* background-image: url("https://s1.ax1x.com/2020/04/22/JN7PmT.png"); */
   background-attachment: fixed;
   background-position: top;
   background-repeat: no-repeat;
@@ -82,6 +82,7 @@
   width: 49%;
   padding-left: 1%;
   height: 100px;
+  vertical-align: top;
 }
 .card-item-title {
   width: 50%;
@@ -104,101 +105,97 @@
 </style>
 
 <template>
-    <div class="about-detail">
-        <div class="flower-pic"></div>
-        <div class="draw">
-            <h1 class="flower-name">{{flower.name}}</h1>
-            <div class="flower-detail">
-                <div class="flower-group">
-                    <div class="detail-small-title">
-                        <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                        <h1 class="detail-title">介绍</h1>
-                    </div>
-                    <p class="text">{{flower.description}}</p>
-                </div>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">花语</h1>
-                </div>
-                <p class="text">{{flower.meaning}}</p>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">科属</h1>
-                </div>
-                <p class="text">{{flower.family}}</p>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">繁殖方式</h1>
-                </div>
-                <p class="text">{{flower.reproduction}}</p>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">花果期</h1>
-                </div>
-                <p class="text">{{flower.fruitStage}}</p>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">环境要求</h1>
-                </div>
-                <div class="text">
-                    <div class="card">
-                        <div class="card-item">
-                            <div class="card-item-title">
-                                <img src="../../../../static/images/sun.png">
-                                <div style="margin-left: 22px">日照</div>
-                            </div>
-                            <p class="card-desc">{{flower.enviromentRequire.sun}}</p>
-                        </div>
-                        <div class="card-item">
-                            <div class="card-item-title">
-                                <img src="../../../../static/images/temperature.png">
-                                <div style="margin-left: 22px;">温度</div>
-                            </div>
-                            <p class="card-desc">{{flower.enviromentRequire.temperature}}</p>
-                        </div>
-                        <div class="card-item">
-                            <div class="card-item-title">
-                                <img src="../../../../static/images/soil.png">
-                                <div style="margin-left: 22px">土壤</div>
-                            </div>
-                            <p class="card-desc">{{flower.enviromentRequire.soil}}</p>
-                        </div>
-                        <div class="card-item">
-                            <div class="card-item-title">
-                                <img src="../../../../static/images/water.png">
-                                <div style="margin-left: 22px">水分</div>
-                            </div>
-                            <p class="card-desc">{{flower.enviromentRequire.water}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">栽培</h1>
-                </div>
-                <p class="text">{{flower.grow}}</p>
-            </div>
-            <div class="flower-group">
-                <div class="detail-small-title">
-                    <img src="../../../../static/images/flower_group.png" class="flower-logo">
-                    <h1 class="detail-title">栽培技术</h1>
-                </div>
-                <p class="text">{{flower.technique}}</p>
-            </div>
+  <div class="about-detail">
+    <div
+      class="flower-pic"
+      :style="{backgroundImage: 'url('+ 'https://s1.ax1x.com/2020/04/22/JN7PmT.png'+')'}"
+    ></div>
+    <div class="draw">
+      <h1 class="flower-name">{{flower.name}}</h1>
+      <div class="flower-detail">
+        <div class="flower-group">
+          <div class="detail-small-title">
+            <img src="../../../../static/images/flower_group.png" class="flower-logo">
+            <h1 class="detail-title">介绍</h1>
+          </div>
+          <p class="text">{{flower.description}}</p>
         </div>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">花语</h1>
+        </div>
+        <p class="text">{{flower.meaning}}</p>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">科属</h1>
+        </div>
+        <p class="text">{{flower.family}}</p>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">繁殖方式</h1>
+        </div>
+        <p class="text">{{flower.reproduction}}</p>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">花果期</h1>
+        </div>
+        <p class="text">{{flower.fruitStage}}</p>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">环境要求</h1>
+        </div>
+        <div class="text">
+          <div class="card">
+            <div class="card-item">
+              <div class="card-item-title">
+                <img src="../../../../static/images/sun.png">
+                <div style="margin-left: 22px">日照</div>
+              </div>
+              <p class="card-desc">{{flower.sun}}</p>
+            </div>
+            <div class="card-item">
+              <div class="card-item-title">
+                <img src="../../../../static/images/temperature.png">
+                <div style="margin-left: 22px;">温度</div>
+              </div>
+              <p class="card-desc">{{flower.temperature}}</p>
+            </div>
+            <div class="card-item">
+              <div class="card-item-title">
+                <img src="../../../../static/images/soil.png">
+                <div style="margin-left: 22px">土壤</div>
+              </div>
+              <p class="card-desc">{{flower.soil}}</p>
+            </div>
+            <div class="card-item">
+              <div class="card-item-title">
+                <img src="../../../../static/images/water.png">
+                <div style="margin-left: 22px">水分</div>
+              </div>
+              <p class="card-desc">{{flower.water}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flower-group">
+        <div class="detail-small-title">
+          <img src="../../../../static/images/flower_group.png" class="flower-logo">
+          <h1 class="detail-title">栽培技术</h1>
+        </div>
+        <p class="text">{{flower.technique}}</p>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -224,12 +221,6 @@ export default {
           soil: `喜富含腐殖质的微酸性砂质壤土。`,
           water: `喜湿润，不耐干旱。`
         },
-        grow: `盆栽茉莉花：盛夏季每天要早、晚浇水，如空
-              气干燥，需补充喷水；冬季休眠期，要控制浇
-              水量，如盆土过湿，会引起烂根或落叶。生长
-              期间需每周施稀薄饼肥一次。春季换盆后，要
-              经常摘心整形，盛花期后，要重剪，以利萌发
-              新枝，使植株整齐健壮，开花旺盛。`,
         technique: `盆栽茉莉花：盛夏季每天要早、晚浇水，
                         如空气干燥，需补充喷水；冬季休眠期，要控
                         制浇水量，如盆土过湿，会引起烂根或落叶。
@@ -252,7 +243,22 @@ export default {
     };
   },
 
-  methods: {}
-  
+  methods: {},
+  mounted() {
+    console.log(this.$root.$mp.query);
+    if (this.$root.$mp.query.flowerId) {
+      this.$wxhttp
+        .get({
+          url: "/flower/" + this.$root.$mp.query.flowerId
+        })
+        .then(res => {
+          console.log("成功数据:", res);
+          this.flower = res.data;
+        })
+        .catch(err => {
+          console.log(`自动请求api失败 err:`, err);
+        });
+    }
+  }
 };
 </script>
