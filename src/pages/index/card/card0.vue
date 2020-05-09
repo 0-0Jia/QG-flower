@@ -11,18 +11,26 @@
   font-weight: bold;
 }
 .card0 .img {
-  height: 26vh;
+  height: 40vh;
   border-radius: 5px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
 .card0 .name {
-  height: 7vh;
-  line-height: 7vh;
-  font-size: 4vh;
+  height: 10vh;
+  line-height: 12vh;
+  font-size: 5vh;
+  text-indent: 2vw;
+  letter-spacing: 0.1em;
 }
-.card0 .introduce {
+.card0 .meaning {
+  height: 5vh;
+  line-height: 5vh;
+  font-size: 3vh;
+  text-indent: 2vw;
+}
+/* .card0 .introduce {
   display: flex;
   align-items: flex-start;
   font-size: 14px;
@@ -49,27 +57,27 @@
 }
 .card0 .meaning .data {
   max-height: 8vh;
-}
+} */
 </style>
 
 <template>
-  <div class=" card0">
+  <div class="card0">
     <div class="month">{{month}}</div>
     <div class="date">
       <span class="num">{{date}}</span>
       <span style="font-size: 16px;font-weight: normal;">th</span>
     </div>
-    <div v-if='cardData' class="img" :style="{'background-image': 'url('+cardData.src+')'}">
-    </div>
+    <div class="img" :style="{'background-image': imgUrl}"></div>
     <div class="name">{{cardData.name}}</div>
-    <div class="introduce">
+    <div class="meaning">{{cardData.meaning}}</div>
+    <!-- <div class="introduce">
       <span class="item">简介</span>
       <span class="data">{{cardData.description}}</span>
-    </div>
-    <div class="meaning">
+    </div> -->
+    <!-- <div class="meaning">
       <span class="item">花语</span>
       <span class="data">{{cardData.meaning}}</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -82,7 +90,6 @@ export default {
     return {
       month: "",
       date: ""
-      
     };
   },
   methods: {
@@ -114,9 +121,19 @@ export default {
       }
       return "";
     },
-    
   },
-  computed: {},
+  computed: {
+    imgUrl() {
+      if (this.cardData && this.cardData.src) {
+        console.log(`url(${this.cardData.src})`)
+        // return 'url(https://i.loli.net/2020/05/07/hb6XHP2gwd3ABe7.jpg)'
+        return "url(https://s1.ax1x.com/2020/05/06/YVYJFe.jpg)"
+        return `url(${this.cardData.src})`;
+      } else {
+        return "url(https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=38660309,594947755&fm=11&gp=0.jpg)";
+      }
+    }
+  },
   created() {
     let now = new Date();
     this.date = now.getDate();

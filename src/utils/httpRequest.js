@@ -1,5 +1,5 @@
 // 接口地址
-const host = '' 
+const host = 'http://39.98.41.126:10021/flower/api/v1' 
  
 function request (url, method, data, header = {}) {
   wx.showLoading({

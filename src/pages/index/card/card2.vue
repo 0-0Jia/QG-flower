@@ -7,14 +7,16 @@
   font-weight: bold;
   text-align: left;
   font-size: 16px;
-  line-height: 2em;
+  line-height: 5vh;
 }
 .card2 .technique .data {
   display: block;
-  max-height: 60vh;
+  padding: 0 1em;
+  max-height: 65vh;
   overflow-y: auto;
   color: #666;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.5em;
   text-indent: 2em;
 }
 </style>

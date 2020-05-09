@@ -45,23 +45,22 @@
   width: 40vh;
 }
 .data {
-
 }
 </style>
 
 <template>
-  <div class="diary">
+  <div class="diary" ref="diary">
     <h1 class="title">
       <span>种花日记</span>
       <div class="add" @click="toAdd">写日记</div>
     </h1>
     <div class="con">
-      <div v-show="!diaryData" class="no-data">
+      <div v-if="!diaryData || diaryData.length==0" class="no-data">
         <span>快来写下你的第一篇日记吧！</span>
         <img src="../../../static/images/diary_bg.png" />
       </div>
-      <div v-show="diaryData" class="data">
-        <diaryList v-for="(item, index) in diaryData" :key='index' :diaryList="item"></diaryList>
+      <div v-else class="data">
+        <diaryList v-for="(item, index) in diaryData" :key="index" :diaryList="item"></diaryList>
       </div>
     </div>
   </div>
@@ -69,36 +68,47 @@
 
 <script>
 import store from "./store";
-import diaryList from './diaryList/diaryList.vue';
+import diaryList from "./diaryList/diaryList.vue";
+import httpRequest from "../../utils/httpRequest.js";
 
 export default {
   data() {
     return {
-      diaryData: null
+      ifLogin: false,
+      userId: null,
+      diaryData: [],
+      page: 1,
+      pageSize: 10,
+      total: -1
     };
   },
   components: {
     diaryList
   },
-  computed: {
-    // count() {
-    //   return store.state.count;
-    // }
-  },
+  computed: {},
   methods: {
-    // increment() {
-    //   store.commit("increment");
-    // },
-    // decrement() {
-    //   store.commit("decrement");
-    // },
+    scrollFun() {
+      console.log(this.$refs.diary);
+      if(this.total < this.pageSize) {
+        return;
+      }
+      let scrollTop = 1;
+       let clientHeight = 1;
+       let crollHeight = 1;
+    },
+    ifWXLogin() {
+      console.log("获取用户微信登录权限");
+      this.ifLogin = true;
+      this.userId = 1;
+      // this.getDiaryList();
+      this.getTestData();
+    },
     toAdd() {
       store.commit("add");
       store.commit("changeDate", null);
       mpvue.navigateTo({ url: "../diary/diaryDetail/main" });
     },
-    
-    test() {
+    getTestData() {
       let url =
         "http://img5.imgtn.bdimg.com/it/u=3905026749,806656350&fm=26&gp=0.jpg";
       this.diaryData = [
@@ -110,7 +120,7 @@ export default {
               time: "2020/2/2 22:11:22",
               content: "这是一篇日记1",
               images: [url, url]
-            },
+            }
           ]
         },
         {
@@ -119,7 +129,8 @@ export default {
             {
               diaryId: 0,
               time: "2020/2/2 22:11:22",
-              content: "这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1",
+              content:
+                "这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1",
               images: [url, url, url]
             },
             {
@@ -127,7 +138,7 @@ export default {
               time: "2020/2/2 22:11:22",
               content: "这是一篇日记2",
               images: [url, url, url]
-            },
+            }
           ]
         },
         {
@@ -144,17 +155,35 @@ export default {
               time: "2020/2/2 22:11:22",
               content: "这是一篇日记2",
               images: [url, url, url]
-            },
+            }
           ]
         }
       ];
+    },
+    getDiaryList() {
+      return;
+      let send = {
+        url: "/diary",
+        data: {
+          page: 1,
+          pageSize: 10
+        }
+      };
+      httpRequest.get(send).then(res => {
+        console.log(res);
+        if (res.code == 1) {
+          this.cardData = res.data;
+        } else {
+        }
+      });
     }
   },
-  created() {
-    // setInterval(()=>{
-    //   this.increment();
-    // }, 1000)
-    this.test();
+  onShow() {
+    if (this.ifLogin) {
+      return;
+    } else {
+      this.ifWXLogin();
+    }
   }
 };
 </script>
