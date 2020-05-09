@@ -116,13 +116,9 @@ export default {
   },
   computed: {
     type() {
-      console.log(store.state.type);
+      // false-> 编辑, true-> 添加
       return store.state.type;
     },
-    // data() {
-    //   console.log(store.state.data);
-    //   return store.state.data;
-    // },
     time() {
       if (!store.state.data) return "";
       let date = new Date(store.state.data.time);

@@ -1,4 +1,9 @@
 <style scoped>
+.card1 {
+  padding-right: 1em;
+  max-height: 70vh;
+  overflow-y: auto;
+}
 .card1 .list {
   display: flex;
   align-items: flex-start;
@@ -7,11 +12,13 @@
 }
 .card1 .list .item {
   display: block;
-  width: 5em;
+  width: 25%;
+  min-width: 4em;
   font-weight: bold;
 }
 .card1 .list .data {
   display: block;
+  width: 75%;
 }
 .card1 .environment {
     font-size: 16px;
@@ -53,6 +60,10 @@
 <template>
   <div class="card1">
     <div class="list">
+      <span class="item">简介</span>
+      <span class="data">{{cardData.description}}</span>
+    </div>
+    <div class="list">
       <span class="item">科属</span>
       <span class="data">{{cardData.family}}</span>
     </div>
@@ -72,28 +83,28 @@
               <img src="../../../../static/images/sun.png">
               <span>日照</span>
             </span>
-          <span class="data2">{{cardData.environment.sun}}</span>
+          <span class="data2">{{cardData.sun}}</span>
         </div>
         <div class="list2">
           <span class="item2">
               <img src="../../../../static/images/temperature.png">
               <span>温度</span>
           </span>
-          <span class="data2">{{cardData.environment.temperature}}</span>
+          <span class="data2">{{cardData.temperature}}</span>
         </div>
         <div class="list2">
           <span class="item2">
               <img src="../../../../static/images/soil.png">
               <span>土壤</span>
           </span>
-          <span class="data2">{{cardData.environment.soil}}</span>
+          <span class="data2">{{cardData.soil}}</span>
         </div>
         <div class="list2">
           <span class="item2">
               <img src="../../../../static/images/water.png">
               <span>水分</span>
           </span>
-          <span class="data2">{{cardData.environment.water}}</span>
+          <span class="data2">{{cardData.water}}</span>
         </div>
       </div>
     </div>
