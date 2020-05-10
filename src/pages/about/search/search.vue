@@ -55,7 +55,7 @@
   top: 36px;
   left: 4%;
   width: 83%;
-  height: 208px;
+  max-height: 208px;
   overflow: auto;
   border: 1px solid rgba(170, 169, 169, 0.493);
   z-index: 100;
@@ -224,7 +224,7 @@ export default {
         });
     },
     toDetail(flowerId) {
-      console.log(flowerId)
+      this.fuzzyShow = false;
       this.flowerStorage();
       mpvue.navigateTo({
         url: "../aboutDetail/main?flowerId=" + flowerId
@@ -233,7 +233,6 @@ export default {
     },
     searchByName() {
       this.fuzzyShow = false;
-
       this.toDetail();
     },
     deleteHistory() {
