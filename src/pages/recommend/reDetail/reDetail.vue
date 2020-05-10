@@ -73,7 +73,7 @@
           class="content"
           v-for="(item, index) in firstList"
           :key="index"
-          :style="{ width: imgWidth+'px', height:(item.height + 64)+'px', marginTop: imgMargin+'px',marginLeft:imgMargin + 'px'}"
+          :style="{ width: imgWidth+'px', marginTop: imgMargin+'px',marginLeft:imgMargin + 'px'}"
         >
           <div class="flower-name">{{item.name}}</div>
           <div class="img-content" :style="{height:item.height + 'px'}">
@@ -93,7 +93,7 @@
         <div
           class="content"
           v-for="(item, index) in secondList"
-          :style="{marginLeft:(imgMargin/2)+'px', width: imgWidth+'px', height:(item.height + 64)+'px',marginTop: imgMargin+'px'}"
+          :style="{marginLeft:(imgMargin/2)+'px', width: imgWidth+'px', marginTop: imgMargin+'px'}"
           :key="index"
         >
           <div class="flower-name">{{item.name}}</div>
@@ -252,6 +252,7 @@ export default {
             that.dataList = res.data;
             for(let i = 0; i < that.dataList.length; i++){
               that.dataList[i].src = "https://s1.ax1x.com/2020/05/04/YCY49f.png";
+              that.dataList[i].meaning = that.dataList[i].meaning.split("：")[1];
             }
           })
           .catch(err => {

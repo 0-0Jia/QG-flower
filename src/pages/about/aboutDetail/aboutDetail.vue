@@ -99,7 +99,7 @@
 .card-desc {
   width: 95%;
   margin: 15px auto;
-  text-align: left;
+  text-align: center;
   font-size: 14px;
 }
 </style>
