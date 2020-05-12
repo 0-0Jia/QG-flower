@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   background-color: #f6faff;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .title {
   position: fixed;
@@ -49,7 +49,7 @@
 </style>
 
 <template>
-  <div class="diary" ref="diary">
+  <scroll-view  class="diary" scroll-y='ture' @scrolltolower="scrollFun">
     <h1 class="title">
       <span>种花日记</span>
       <div class="add" @click="toAdd">写日记</div>
@@ -63,7 +63,7 @@
         <diaryList v-for="(item, index) in diaryData" :key="index" :diaryList="item"></diaryList>
       </div>
     </div>
-  </div>
+  </scroll-view >
 </template>
 
 <script>
@@ -88,7 +88,8 @@ export default {
   computed: {},
   methods: {
     scrollFun() {
-      console.log(this.$refs.diary);
+      console.log('231231');
+      return;
       if(this.total < this.pageSize) {
         return;
       }
