@@ -46,6 +46,12 @@
 }
 .data {
 }
+.showTotal {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+  line-height: 2em;
+}
 </style>
 
 <template>
@@ -63,6 +69,7 @@
         <diaryList v-for="(item, index) in diaryData" :key="index" :diaryList="item"></diaryList>
       </div>
     </div>
+    <div class="showTotal" v-show="ifShowTotal">已经到底部了</div>
   </scroll-view >
 </template>
 
@@ -74,7 +81,6 @@ import httpRequest from "../../utils/httpRequest.js";
 export default {
   data() {
     return {
-      ifLogin: false,
       userId: null,
       diaryData: [],
       page: 1,
@@ -85,28 +91,23 @@ export default {
   components: {
     diaryList
   },
-  computed: {},
+  computed: {
+    ifShowTotal() {
+      return this.total <= this.pageSize * this.page
+    }
+  },
   methods: {
     scrollFun() {
-      console.log('231231');
-      return;
-      if(this.total < this.pageSize) {
+      console.log('滚到底部');
+      if(this.ifShowTotal) {
         return;
       }
-      let scrollTop = 1;
-       let clientHeight = 1;
-       let crollHeight = 1;
-    },
-    ifWXLogin() {
-      console.log("获取用户微信登录权限");
-      this.ifLogin = true;
-      this.userId = 1;
-      // this.getDiaryList();
-      this.getTestData();
+      this.page ++ ;
+      this.getDiaryList();
     },
     toAdd() {
-      store.commit("add");
-      store.commit("changeDate", null);
+      store.commit("toAdd");
+      store.commit("changeData", null);
       mpvue.navigateTo({ url: "../diary/diaryDetail/main" });
     },
     getTestData() {
@@ -166,21 +167,30 @@ export default {
       let send = {
         url: "/diary",
         data: {
-          page: 1,
-          pageSize: 10
+          page: this.page,
+          pageSize: this.pageSize,
+          userId: store.user.userId // 测试用户
         }
       };
       httpRequest.get(send).then(res => {
-        console.log(res);
         if (res.code == 1) {
-          this.cardData = res.data;
+          console.log(res.data);
+          // this.diaryList = this.diaryList.concat(res.data.records);
+          this.total = res.data.total
         } else {
         }
       });
-    }
+    },
+    ifWXLogin() {
+      console.log("获取用户微信登录权限");
+      store.commit("changeUser", {userId:1})
+      this.userId = 1;
+      this.getDiaryList();
+      // this.getTestData();
+    },
   },
   onShow() {
-    if (this.ifLogin) {
+    if (store.user) {
       return;
     } else {
       this.ifWXLogin();

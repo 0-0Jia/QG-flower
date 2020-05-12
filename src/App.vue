@@ -1,5 +1,9 @@
 <script>
 export default {
+  onHide () {
+    // 销毁token
+    wx.removeStorageSync('Authorization'); 
+  },
   created () {
     // 调用API从本地缓存中获取数据
     /*

@@ -104,8 +104,8 @@ export default {
       return time;
     },
     toEdit(data) {
-      store.commit("edit");
-      store.commit("changeDate", data);
+      store.commit("toEdit");
+      store.commit("changeData", data);
       mpvue.navigateTo({ url: "../diary/diaryDetail/main" });
     },
   },

@@ -6,20 +6,25 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         type: false, // false-> 编辑, true-> 添加
-        data: null
+        data: null, 
+        user: null
     },
     mutations: {
-        edit: (state) => {
+        toEdit: (state) => {
             let obj = state
             obj.type = false
         },
-        add: (state) => {
+        toAdd: (state) => {
             const obj = state
             obj.type = true
         },
-        changeDate: (state, result) => {
+        changeData: (state, result) => {
             const obj = state
             obj.data = result
+        },
+        changeUser: (state, user) => {
+            const obj = state
+            obj.data = user
         }
     }
 })
