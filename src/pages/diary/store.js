@@ -7,7 +7,6 @@ const store = new Vuex.Store({
     state: {
         type: false, // false-> 编辑, true-> 添加
         data: null, 
-        user: null
     },
     mutations: {
         toEdit: (state) => {
@@ -22,10 +21,6 @@ const store = new Vuex.Store({
             const obj = state
             obj.data = result
         },
-        changeUser: (state, user) => {
-            const obj = state
-            obj.data = user
-        }
     }
 })
 

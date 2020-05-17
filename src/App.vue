@@ -1,37 +1,32 @@
 <script>
 export default {
-  onHide () {
+  created() {
     // 销毁token
-    wx.removeStorageSync('Authorization'); 
-  },
-  created () {
-    // 调用API从本地缓存中获取数据
-    /*
-     * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串
-     * 微信：mpvue === wx, mpvuePlatform === 'wx'
-     * 头条：mpvue === tt, mpvuePlatform === 'tt'
-     * 百度：mpvue === swan, mpvuePlatform === 'swan'
-     * 支付宝(蚂蚁)：mpvue === my, mpvuePlatform === 'my'
-     */
+    console.log('销毁token');
+    wx.removeStorageSync("Authorization");
+    // 初始化云开发
+    wx.cloud.init({
+      env: "qg-flower-615ko"
+    });
 
-    let logs
-    if (mpvuePlatform === 'my') {
-      logs = mpvue.getStorageSync({key: 'logs'}).data || []
-      logs.unshift(Date.now())
+    let logs;
+    if (mpvuePlatform === "my") {
+      logs = mpvue.getStorageSync({ key: "logs" }).data || [];
+      logs.unshift(Date.now());
       mpvue.setStorageSync({
-        key: 'logs',
+        key: "logs",
         data: logs
-      })
+      });
     } else {
-      logs = mpvue.getStorageSync('logs') || []
-      logs.unshift(Date.now())
-      mpvue.setStorageSync('logs', logs)
+      logs = mpvue.getStorageSync("logs") || [];
+      logs.unshift(Date.now());
+      mpvue.setStorageSync("logs", logs);
     }
   },
-  log () {
-    console.log(`log at:${Date.now()}`)
+  log() {
+    console.log(`log at:${Date.now()}`);
   }
-}
+};
 </script>
 
 <style>
@@ -43,7 +38,7 @@ export default {
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-  background-color: #F6FAFF;
+  background-color: #f6faff;
 }
 /* this rule will be remove */
 * {

@@ -65,7 +65,12 @@
       <div class="monthAndYear">{{monthAndYear}}</div>
     </div>
     <div class="list1Con">
-      <div class="list1" @click="toEdit(item)" v-for="(item, index) in diaryList.dataArr" :key="index">
+      <div
+        class="list1"
+        @click="toEdit(item)"
+        v-for="(item, index) in diaryList.dataArr"
+        :key="index"
+      >
         <div class="diaryStr">{{item.content}}</div>
         <div class="imgList">
           <div
@@ -75,7 +80,7 @@
             :style="{'background-image':'url('+url+')'}"
           ></div>
         </div>
-        <div class="time">{{item.time}}</div>
+        <div class="time">{{item.formatTime}}</div>
       </div>
     </div>
   </div>
@@ -99,17 +104,24 @@ export default {
       let date = new Date(str);
       let minute = date.getMinutes();
       let hour = date.getHours();
-      let time = `${hour}:${minute < 10 ? "0" + minute : minute}`;
-      console.log(time);
+      let time = `${hour<10?"0"+hour:hour}:${minute<10?"0"+minute:minute}`;
       return time;
     },
-    toEdit(data) {
-      store.commit("toEdit");
-      store.commit("changeData", data);
-      mpvue.navigateTo({ url: "../diary/diaryDetail/main" });
+    formatTime() {
+      let len = this.diaryList.dataArr.length;
+      for (let i = 0; i < len; i++) {
+        this.diaryList.dataArr[i].formatTime = this.handleTime(
+          this.diaryList.dataArr[i].time
+        );
+      }
     },
+    toEdit(data) {
+      store.commit("changeData", data);
+      mpvue.navigateTo({ url: "../diary/editDiary/main" });
+    }
   },
   created() {
+    console.log(this.diaryList);
     if (this.diaryList.date) {
       let date = new Date(this.diaryList.date);
       let day = date.getDate();
@@ -118,6 +130,7 @@ export default {
       this.day = day;
       this.monthAndYear = `${year}/${month}`;
     }
+    this.formatTime();
   }
 };
 </script>

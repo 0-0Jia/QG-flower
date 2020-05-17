@@ -44,9 +44,7 @@
   height: 60vh;
   width: 40vh;
 }
-.data {
-}
-.showTotal {
+.noMore {
   text-align: center;
   font-size: 14px;
   color: #999;
@@ -69,7 +67,7 @@
         <diaryList v-for="(item, index) in diaryData" :key="index" :diaryList="item"></diaryList>
       </div>
     </div>
-    <div class="showTotal" v-show="ifShowTotal">已经到底部了</div>
+    <div class="noMore" v-show="noMore">已经到底部了</div>
   </scroll-view >
 </template>
 
@@ -85,30 +83,26 @@ export default {
       diaryData: [],
       page: 1,
       pageSize: 10,
-      total: -1
+      noMore: false
     };
   },
   components: {
     diaryList
   },
   computed: {
-    ifShowTotal() {
-      return this.total <= this.pageSize * this.page
-    }
   },
   methods: {
     scrollFun() {
       console.log('滚到底部');
-      if(this.ifShowTotal) {
+      if(this.noMore) {
         return;
       }
       this.page ++ ;
       this.getDiaryList();
     },
     toAdd() {
-      store.commit("toAdd");
       store.commit("changeData", null);
-      mpvue.navigateTo({ url: "../diary/diaryDetail/main" });
+      mpvue.navigateTo({ url: "../diary/addDiary/main" });
     },
     getTestData() {
       let url =
@@ -119,7 +113,7 @@ export default {
           dataArr: [
             {
               diaryId: 0,
-              time: "2020/2/2 22:11:22",
+              time: "2020/2/2 12:11:22",
               content: "这是一篇日记1",
               images: [url, url]
             }
@@ -130,7 +124,7 @@ export default {
           dataArr: [
             {
               diaryId: 0,
-              time: "2020/2/2 22:11:22",
+              time: "2020/2/2 12:04:22",
               content:
                 "这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1",
               images: [url, url, url]
@@ -144,17 +138,17 @@ export default {
           ]
         },
         {
-          date: "2020/2/5 22:11:22",
+          date: "2020/2/5 00:00:00",
           dataArr: [
             {
               diaryId: 0,
-              time: "2020/2/2 22:11:22",
+              time: "2020/2/5 01:11:22",
               content: "这是一篇日记1",
               images: [url, url, url]
             },
             {
               diaryId: 1,
-              time: "2020/2/2 22:11:22",
+              time: "2020/2/5 12:12:22",
               content: "这是一篇日记2",
               images: [url, url, url]
             }
@@ -163,38 +157,34 @@ export default {
       ];
     },
     getDiaryList() {
-      return;
       let send = {
         url: "/diary",
         data: {
           page: this.page,
           pageSize: this.pageSize,
-          userId: store.user.userId // 测试用户
+          userId: 1 // 测试用户
         }
       };
       httpRequest.get(send).then(res => {
+        this.getTestData();
+        this.noMore = true;
+        return;
         if (res.code == 1) {
-          console.log(res.data);
-          // this.diaryList = this.diaryList.concat(res.data.records);
-          this.total = res.data.total
-        } else {
+          if (!res.data.records || res.data.records.length==0) {
+            this.noMore = true;
+          } else {
+            console.log(this.diaryData)
+            this.diaryData = this.diaryData.concat(res.data.records);
+            console.log(this.diaryData)
+          }
         }
       });
     },
-    ifWXLogin() {
-      console.log("获取用户微信登录权限");
-      store.commit("changeUser", {userId:1})
-      this.userId = 1;
-      this.getDiaryList();
-      // this.getTestData();
-    },
+  },
+  mounted() {
+    this.getDiaryList();
   },
   onShow() {
-    if (store.user) {
-      return;
-    } else {
-      this.ifWXLogin();
-    }
   }
 };
 </script>
