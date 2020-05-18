@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/diary/main",
     "pages/index/main",
+    "pages/diary/main",
     "pages/about/main",
     "pages/recommend/main",
     "pages/diary/editDiary/main",

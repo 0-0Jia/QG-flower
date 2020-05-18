@@ -130,8 +130,8 @@ export default {
       content: "",
       clock: null,
       date: null,
-      images: [],
-      imagesFileID: []
+      images: null,
+      imagesFileID: null
     };
   },
   computed: {
@@ -183,27 +183,78 @@ export default {
       }
       return this.imagesFileID.join("$_$");
     },
+    judgeSend() {
+      if (!this.content) {
+        wx.showModal({
+          title: "提示",
+          content: "内容不能为空",
+          showCancel: false
+        });
+        return false;
+      }
+      return true;
+    },
     addRequest() {
-      Promise.all(this.addAllImg()).then(() => {
-        let send = {
-          userId: 1,
-          time: `${this.date} ${this.clock}`,
-          content: this.content,
-          images: this.getImgStr()
-        };
-        console.log("提交新增", send);
-        this.$wxhttp
-          .post({
-            url: "diary/",
-            data: JSON.stringify(send)
-          })
-          .then(res => {
-            console.log(res);
-          });
+      if (!this.judgeSend()) {
+        return;
+      }
+      wx.showModal({
+        title: "提示",
+        content: "您确定保存这篇日记吗",
+        success: res => {
+          if (res.confirm) {
+            wx.showLoading({
+              title: "加载中"
+            });
+            Promise.all(this.addAllImg()).then(() => {
+              let send = {
+                userId: 1,
+                time: `${this.date} ${this.clock}`,
+                content: this.content,
+                images: this.getImgStr()
+              };
+              console.log("提交新增", send);
+              this.$wxhttp
+                .post({
+                  url: "diary/",
+                  data: JSON.stringify(send)
+                })
+                .then(res => {
+                  wx.hideLoading();
+                  console.log(res);
+                  if (res.code == 1) {
+                    wx.showModal({
+                      title: "提示",
+                      content: "提交成功",
+                      showCancel: false,
+                      success: res => {
+                        store.state.hadChange = true;
+                        wx.switchTab({
+                          url: "/pages/diary/main"
+                        });
+                      }
+                    });
+                  } else {
+                    wx.showModal({
+                      title: "提示",
+                      content: res.message,
+                      showCancel: false
+                    });
+                  }
+                });
+            });
+          } else if (res.cancel) {
+          }
+        }
       });
     },
     prefixInteger(num, n) {
       return (Array(n).join(0) + num).slice(-n);
+    },
+    initData() {
+      this.content = null;
+      this.images = [];
+      this.imagesFileID = [];
     },
     initTime() {
       let date = new Date();
@@ -216,8 +267,10 @@ export default {
       this.clock = `${hour}:${minute}:00`;
     }
   },
-  onShow() {
+  onLoad(options) {
     this.initTime();
+    this.initData();
+    console.log("添加页面的数据", store.state.data);
   }
 };
 </script>

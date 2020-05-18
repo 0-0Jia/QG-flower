@@ -34,9 +34,9 @@ function getAccessToken() {
 }
 // wx请求
 function request(url, method, data, Authorization) {
-  wx.showLoading({
-    title: '加载中' // 数据请求前loading
-  });
+  // wx.showLoading({
+  //   title: '加载中' // 数据请求前loading
+  // });
   return new Promise((resolve, reject) => {
     wx.request({
       url: host + url,
@@ -48,7 +48,7 @@ function request(url, method, data, Authorization) {
         'Authorization': Authorization
       },
       success: function (res) {
-        wx.hideLoading();
+        // wx.hideLoading();
         if (res.data.code == 1) {
           // 将res转发到sendReq的回调函数
           resolve(res.data);
@@ -58,10 +58,10 @@ function request(url, method, data, Authorization) {
         }
       },
       fail: function (res) {
-        wx.hideLoading()
+        //wx.hideLoading()
       },
       complete: function () {
-        wx.hideLoading()
+       // wx.hideLoading()
       }
     })
   })
@@ -105,6 +105,10 @@ function post(obj) {
   return sendReq(obj.url, 'POST', obj.data)
 }
 
+function put(obj) {
+  return sendReq(obj.url, 'PUT', obj.data)
+}
+
 function Delete(obj) {
   return sendReq(obj.url, 'DELETE', obj.data)
 }
@@ -113,6 +117,7 @@ export default {
   request,
   get,
   post,
+  put,
   host,
   Delete
 }

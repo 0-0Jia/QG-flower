@@ -53,7 +53,7 @@
 </style>
 
 <template>
-  <scroll-view  class="diary" scroll-y='ture' @scrolltolower="scrollFun">
+  <scroll-view class="diary" scroll-y="ture" @scrolltolower="scrollFun">
     <h1 class="title">
       <span>种花日记</span>
       <div class="add" @click="toAdd">写日记</div>
@@ -64,11 +64,11 @@
         <img src="../../../static/images/diary_bg.png" />
       </div>
       <div v-else class="data">
-        <diaryList v-for="(item, index) in diaryData" :key="index" :diaryList="item"></diaryList>
+        <diaryList v-for="(item, index) in diaryData" :key="index" :data="item"></diaryList>
       </div>
     </div>
     <div class="noMore" v-show="noMore">已经到底部了</div>
-  </scroll-view >
+  </scroll-view>
 </template>
 
 <script>
@@ -79,7 +79,6 @@ import httpRequest from "../../utils/httpRequest.js";
 export default {
   data() {
     return {
-      userId: null,
       diaryData: [],
       page: 1,
       pageSize: 10,
@@ -89,74 +88,87 @@ export default {
   components: {
     diaryList
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     scrollFun() {
-      console.log('滚到底部');
-      if(this.noMore) {
+      console.log("滚到底部");
+      if (this.noMore) {
         return;
       }
-      this.page ++ ;
+      this.page++;
       this.getDiaryList();
     },
     toAdd() {
       store.commit("changeData", null);
-      mpvue.navigateTo({ url: "../diary/addDiary/main" });
+      mpvue.navigateTo({ url: "../diary/addDiary/main?type=add" });
     },
-    getTestData() {
-      let url =
-        "http://img5.imgtn.bdimg.com/it/u=3905026749,806656350&fm=26&gp=0.jpg";
-      this.diaryData = [
-        {
-          date: "2020/2/2 22:11:22",
-          dataArr: [
-            {
-              diaryId: 0,
-              time: "2020/2/2 12:11:22",
-              content: "这是一篇日记1",
-              images: [url, url]
-            }
-          ]
-        },
-        {
-          date: "2020/2/5 22:11:22",
-          dataArr: [
-            {
-              diaryId: 0,
-              time: "2020/2/2 12:04:22",
-              content:
-                "这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1这是一篇日记1",
-              images: [url, url, url]
-            },
-            {
-              diaryId: 1,
-              time: "2020/2/2 22:11:22",
-              content: "这是一篇日记2",
-              images: [url, url, url]
-            }
-          ]
-        },
-        {
-          date: "2020/2/5 00:00:00",
-          dataArr: [
-            {
-              diaryId: 0,
-              time: "2020/2/5 01:11:22",
-              content: "这是一篇日记1",
-              images: [url, url, url]
-            },
-            {
-              diaryId: 1,
-              time: "2020/2/5 12:12:22",
-              content: "这是一篇日记2",
-              images: [url, url, url]
-            }
-          ]
+    // 请求一张云存储的照片，获取临时地址
+    upLoadImg(fileID) {
+      // fileID --> 一张照片的 fileID
+      return new Promise((resolve, reject) => {
+        wx.cloud.downloadFile({
+          fileID: fileID, // 文件 ID
+          success: res => {
+            resolve(res.tempFilePath);
+            // 返回 临时地址
+          },
+          fail: console.error
+        });
+      });
+    },
+    // 请求一篇日记的全部照片
+    upLoadDiaryImg(diary) {
+      // diary --> 一篇日记
+      return new Promise((resolve, reject) => {
+        if (!diary.imageList) {
+          resolve();
         }
-      ];
+        let len2 = diary.imageList.length;
+        let promiseArr = [];
+        for (let j = 0; j < len2; j++) {
+          promiseArr.push(this.upLoadImg(diary.imageList[j]));
+        }
+        Promise.all(promiseArr).then(res => {
+          // res --> 一篇日记里，临时照片地址列表
+          diary.imgList = res;
+          resolve();
+        });
+      });
+    },
+    // 请求一天所有日记的全部照片
+    upLoadDayImg(diaryList) {
+      // diaryList --> 一天的日记
+      return new Promise((resolve, reject) => {
+        let len = diaryList.length;
+        let promiseArr = [];
+        for (let i = 0; i < len; i++) {
+          promiseArr.push(this.upLoadDiaryImg(diaryList[i]));
+        }
+        Promise.all(promiseArr).then(res => {
+          // 该天的全部日记，已经拥有了临时照片地址列表imgList
+          resolve();
+        });
+      });
+    },
+    // 请求全部云存储的照片
+    upLoadAllImg(diaryData) {
+      // diaryData --> 全部日记
+      return new Promise((resolve, reject) => {
+        let len = diaryData.length;
+        let promiseArr = [];
+        for (let i = 0; i < len; i++) {
+          promiseArr.push(this.upLoadDayImg(diaryData[i].diaryList));
+        }
+        Promise.all(promiseArr).then(res => {
+          // 全部日记，已经拥有了临时照片地址列表imgList
+          resolve();
+        });
+      });
     },
     getDiaryList() {
+      wx.showLoading({
+        title: "加载中" 
+      });
       let send = {
         url: "/diary",
         data: {
@@ -166,25 +178,28 @@ export default {
         }
       };
       httpRequest.get(send).then(res => {
-        this.getTestData();
-        this.noMore = true;
-        return;
         if (res.code == 1) {
-          if (!res.data.records || res.data.records.length==0) {
+          if (!res.data || res.data.length == 0) {
             this.noMore = true;
           } else {
-            console.log(this.diaryData)
-            this.diaryData = this.diaryData.concat(res.data.records);
-            console.log(this.diaryData)
+            this.upLoadAllImg(res.data).then(() => {
+              this.diaryData = this.diaryData.concat(res.data);
+              console.log(this.diaryData);
+              wx.hideLoading();
+            });
           }
         }
       });
-    },
-  },
-  mounted() {
-    this.getDiaryList();
+    }
   },
   onShow() {
+    if (store.state.hadChange == true) {
+      store.state.hadChange = false;
+      this.page = 1;
+      this.noMore = false;
+      this.diaryData = [];
+      this.getDiaryList();
+    }
   }
 };
 </script>

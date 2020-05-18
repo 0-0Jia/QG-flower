@@ -62,7 +62,6 @@
         <card2 :cardData="cardData"></card2>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -70,7 +69,7 @@
 import card0 from "./card/card0.vue";
 import card1 from "./card/card1.vue";
 import card2 from "./card/card2.vue";
-import httpRequest from '../../utils/httpRequest.js'
+import httpRequest from "../../utils/httpRequest.js";
 export default {
   data() {
     return {
@@ -107,15 +106,18 @@ export default {
 
   methods: {
     getData() {
+      wx.showLoading({
+        title: "加载中" // 数据请求前loading
+      });
       let send = {
-        url:'/flower/daily'
-      }
-      httpRequest.get(send).then((res)=>{
+        url: "/flower/daily"
+      };
+      httpRequest.get(send).then(res => {
         console.log(res);
-        if(res.code == 1) {
+        wx.hideLoading();
+        if (res.code == 1) {
           this.cardData = res.data;
         } else {
-
         }
       });
     },
@@ -149,7 +151,9 @@ export default {
       console.log(this.showIndex);
     }
   },
-  mounted() {this.getData()},
+  mounted() {
+    this.getData();
+  },
   created() {}
 };
 </script>

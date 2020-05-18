@@ -130,7 +130,7 @@ export default {
       if (this.cardData && this.cardData.src) {
         console.log(`url(${this.cardData.src})`)
         // return 'url(https://i.loli.net/2020/05/07/hb6XHP2gwd3ABe7.jpg)'
-        return "url(https://s1.ax1x.com/2020/05/06/YVYJFe.jpg)"
+        // return "url(https://s1.ax1x.com/2020/05/06/YVYJFe.jpg)"
         return `url(${this.cardData.src})`;
       } else {
         return "url(https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=38660309,594947755&fm=11&gp=0.jpg)";
