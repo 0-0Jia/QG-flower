@@ -181,6 +181,7 @@ export default {
         if (res.code == 1) {
           if (!res.data || res.data.length == 0) {
             this.noMore = true;
+            wx.hideLoading();
           } else {
             this.upLoadAllImg(res.data).then(() => {
               this.diaryData = this.diaryData.concat(res.data);

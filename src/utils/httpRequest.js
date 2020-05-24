@@ -11,14 +11,15 @@ function getAccessToken() {
         if (res.code) {
           wx.request({
             // 将code发给后端
-            url: host + 'flower/daily',// （假请求，测试需要）
+            url: host + 'user/login',
+            method: 'POST',
             data: {
               code: res.code
             },
             success: (response) => {
               // 获取token
-              console.log('成功获取token')
-              let Authorization = 'sessionId=test_Authorization' // 假token
+              // console.log('成功获取token',response.header.Authorization)
+              let Authorization = response.header.Authorization 
               // 写入token
               wx.setStorageSync('Authorization', Authorization)
               resolve(Authorization)
