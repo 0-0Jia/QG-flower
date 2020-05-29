@@ -30,6 +30,7 @@
 }
 .con {
   margin-top: 60px;
+  min-height: 95vh;
 }
 .no-data span {
   display: block;
