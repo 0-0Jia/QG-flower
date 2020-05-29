@@ -8,6 +8,7 @@
   width: 100%;
   height: 250px;
   /* background-image: url("https://s1.ax1x.com/2020/04/22/JN7PmT.png"); */
+  background-size: cover;
   background-attachment: fixed;
   background-position: top;
   background-repeat: no-repeat;
@@ -106,10 +107,7 @@
 
 <template>
   <div class="about-detail">
-    <div
-      class="flower-pic"
-      :style="{backgroundImage: 'url('+ 'https://s1.ax1x.com/2020/04/22/JN7PmT.png'+')'}"
-    ></div>
+    <div class="flower-pic" :style="{backgroundImage: 'url('+ flower.src +')'}"></div>
     <div class="draw">
       <h1 class="flower-name">{{flower.name}}</h1>
       <div class="flower-detail">
@@ -202,49 +200,68 @@
 export default {
   data() {
     return {
-      flower: {
-        name: "茉莉花",
-        meaning: `你是我的生命。`,
-        description: `茉莉喜温暖湿润和阳光充足环境，叶色翠绿，
-                    花朵颜色洁白，香气浓郁，是最常见的芳香性
-                    盆栽花木。在素馨属中，最著名的一种是双瓣
-                    茉莉，也就是人们平常俗称的茉莉花。茉莉有
-                    着良好的保健和美容功效，可以用来饮食，可
-                    用于茉莉花茶的制作。茉莉花是菲律宾、突尼
-                    斯、印尼的国花，象征着爱情和友谊。`,
-        family: "木犀科素馨属",
-        reproduction: "扦插、压条",
-        fruitStage: "花期6~10月",
+      // flower: {
+      //   src: "https://s1.ax1x.com/2020/05/29/tnG6SI.png",
+      //   name: "茉莉花",
+      //   meaning: `你是我的生命。`,
+      //   description: `茉莉喜温暖湿润和阳光充足环境，叶色翠绿，
+      //               花朵颜色洁白，香气浓郁，是最常见的芳香性
+      //               盆栽花木。在素馨属中，最著名的一种是双瓣
+      //               茉莉，也就是人们平常俗称的茉莉花。茉莉有
+      //               着良好的保健和美容功效，可以用来饮食，可
+      //               用于茉莉花茶的制作。茉莉花是菲律宾、突尼
+      //               斯、印尼的国花，象征着爱情和友谊。`,
+      //   family: "木犀科素馨属",
+      //   reproduction: "扦插、压条",
+      //   fruitStage: "花期6~10月",
+      //   enviromentRequire: {
+      //     sun: `全日照或半日照，喜光，稍耐阴。`,
+      //     temperature: `适温22℃~33℃，喜高温，不耐寒。`,
+      //     soil: `喜富含腐殖质的微酸性砂质壤土。`,
+      //     water: `喜湿润，不耐干旱。`
+      //   },
+      //   technique: `盆栽茉莉花：盛夏季每天要早、晚浇水，
+      //                   如空气干燥，需补充喷水；冬季休眠期，要控
+      //                   制浇水量，如盆土过湿，会引起烂根或落叶。
+      //                   生长期间需要每周施稀薄饼肥一次。春季换盆
+      //                   后，要经常摘心整形，盛花期后，要重剪，以
+      //                   利萌发新枝，使植株整齐健壮，开花旺盛。
+      //                       从6月至9月开花期勤施含磷较多的液肥，
+      //                   最好每2—3天施一次，肥料可用腐熟好的豆饼
+      //                   和鱼腥水肥液，或者用硫酸铵、过磷酸钙，一
+      //                   般化肥成分兑多了会烧死茉莉植株。也可以用
+      //                   0.l%磷酸二氢钾水溶液，在傍晚向叶面喷洒，
+      //                   也可促其多开花。
+      //                       茉莉花极喜肥，只要养护得当，盆栽茉莉
+      //                   一年可以开三次花。如果是肥料不足、养分不
+      //                   够，开一次花后，就不再开花了。管理到位的
+      //                   话，可以不停的从5月底开到11月初。关键是
+      //                   修剪、阳光、和肥水的掌握。`
+      // }
+        flower: {
+        src: "",
+        name: "",
+        meaning: ``,
+        description: ``,
+        family: "",
+        reproduction: "",
+        fruitStage: "",
         enviromentRequire: {
-          sun: `全日照或半日照，喜光，稍耐阴。`,
-          temperature: `适温22℃~33℃，喜高温，不耐寒。`,
-          soil: `喜富含腐殖质的微酸性砂质壤土。`,
-          water: `喜湿润，不耐干旱。`
+          sun: ``,
+          temperature: ``,
+          soil: ``,
+          water: ``
         },
-        technique: `盆栽茉莉花：盛夏季每天要早、晚浇水，
-                        如空气干燥，需补充喷水；冬季休眠期，要控
-                        制浇水量，如盆土过湿，会引起烂根或落叶。
-                        生长期间需要每周施稀薄饼肥一次。春季换盆
-                        后，要经常摘心整形，盛花期后，要重剪，以
-                        利萌发新枝，使植株整齐健壮，开花旺盛。
-                            从6月至9月开花期勤施含磷较多的液肥，
-                        最好每2—3天施一次，肥料可用腐熟好的豆饼
-                        和鱼腥水肥液，或者用硫酸铵、过磷酸钙，一
-                        般化肥成分兑多了会烧死茉莉植株。也可以用
-                        0.l%磷酸二氢钾水溶液，在傍晚向叶面喷洒，
-                        也可促其多开花。
-                            茉莉花极喜肥，只要养护得当，盆栽茉莉
-                        一年可以开三次花。如果是肥料不足、养分不
-                        够，开一次花后，就不再开花了。管理到位的
-                        话，可以不停的从5月底开到11月初。关键是
-                        修剪、阳光、和肥水的掌握。`
+        technique: ``
       }
-      // 抽屉
     };
   },
 
   methods: {},
   mounted() {
+    wx.showLoading({
+      title: "加载中..."
+    });
     console.log(this.$root.$mp.query);
     if (this.$root.$mp.query.flowerId) {
       this.$wxhttp
@@ -253,6 +270,7 @@ export default {
         })
         .then(res => {
           console.log("成功数据:", res);
+          wx.hideLoading();
           this.flower = res.data;
         })
         .catch(err => {

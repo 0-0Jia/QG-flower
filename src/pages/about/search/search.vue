@@ -150,7 +150,7 @@
             class="search-item"
             v-for="(flower, index) in hotList"
             :key="index"
-            @click="toDetail(flower.flowerId)"
+            @click="flowerName = flower.name;toDetail(flower.flowerId)"
           >{{flower.name}}</div>
         </div>
       </div>
@@ -263,8 +263,11 @@ export default {
           flag = false;
         }
       }
+
       if (flag && !isEmpty(this.flowerName)) {
         this.historyList.push({ item: this.flowerName });
+      }else {
+        return false;
       }
       flag = true;
 

@@ -1,7 +1,7 @@
 <style scoped>
 .re-detail {
   width: 100%;
-  padding: 1px 0;
+  padding: 1px 0 20px 0;
   background-color: #f6faff;
 }
 .title {
@@ -62,12 +62,7 @@
         alt=""
       >
     </div>
-    <scroll-view
-      class="main"
-      scroll-y="true"
-      :style="{height:windowHeight+'px'}"
-      @scrolltolower="loadMoreImages"
-    >
+    <scroll-view class="main" scroll-y="true" :style="{height:windowHeight+'px'}">
       <div class="view">
         <div
           class="content"
@@ -132,6 +127,7 @@ export default {
   methods: {
     // 加载图片
     loadImage: function(e) {
+      console.log(e.currentTarget.dataset.index)
       let index = e.currentTarget.dataset.index; // 图片所在索引
       let imgW = e.mp.detail.width;
       let imgH = e.mp.detail.height; // 图片实际宽度和高度
@@ -162,104 +158,69 @@ export default {
       this.firstList = firstList;
       this.secondList = secondList;
       this.topArr = [firstColH, secondColH];
-    },
-    // 加载更多图片
-    loadMoreImages: function() {
-      let index;
-      // let imgs = [
-      //   {
-      //     src: "https://s1.ax1x.com/2020/05/04/YCYpTI.png",
-      //     name: "花花1",
-      //     meaning: "菊花象征意义：清净、高洁、怀念、成功、长寿。 菊花花语：清净、高洁、我爱你、真情 各种菊花花语 红色菊花:我爱 白色菊花：事实 黄色菊花:忽视的爱 翠菊：追想、可靠的爱情、请相信我 春菊：为爱情占卜 六月菊：别离 冬菊：别离 法国小菊：忍耐 瓜叶菊：快乐 波斯菊：野性美 大波斯菊：少女纯情 万寿菊：友情 矢车菊：纤细、优雅 麦杆菊：永恒的记忆、刻画在心 鳞托菊：永远的爱 黄菊：飞黄腾达 白菊：哀悼、真实坦诚 红菊：我爱你 翠菊：追想、可靠的爱情、请相信我 春菊：为爱情占卜 冬菊：别离 天人菊：团结 万寿菊：友情 金盏菊：悲伤嫉妒 富贵菊：富贵荣华、繁茂兴盛 矢车菊：纤细、优雅、单身的幸福 麦杆菊：永恒的记忆、刻画在心 鳞托菊：永远的爱 瓜叶菊：快乐 六月菊：别离 太阳菊：热情、活力 波斯菊：野性美 大波斯菊：少女纯情 法国小菊：忍耐 蓝色水菊：善变固执无情的你 雏菊（延命菊）：愉快、幸福、纯洁、天真、和平、希望、美人 非洲菊（扶郎花）：神秘、兴奋、有毅力、适应力强 红色天竺葵：你在我的脑海挥之不去 粉色天竺葵：很高兴能陪在你身边"
-      //   },
-      //   {
-      //     src: "https://s1.ax1x.com/2020/05/04/YCY49f.png",
-      //     name: "花花2",
-      //     meaning: "花语2"
-      //   },
-      //   {
-      //     src: "https://s1.ax1x.com/2020/05/04/YCY538.png",
-      //     name: "花花3",
-      //     meaning: "花语3"
-      //   },
-      //   {
-      //     src: "https://s1.ax1x.com/2020/05/04/YCYIgS.png",
-      //     name: "花花4",
-      //     meaning: "花语4"
-      //   },
-      //   {
-      //     src: "https://s1.ax1x.com/2020/05/04/YCYf4P.png",
-      //     name: "花花5",
-      //     meaning: "花语5"
-      //   }
-      // ];
-
-      // for (let i = 0; i < 1; i++) {
-      //   let randomNum = Math.random() * 100;
-      //   index = parseInt(randomNum) % imgs.length;
-      //   imgs[index].height = 0;
-      //   imgs.splice(index, 1);
-      // }
-
-      // this.dataList = imgs;
       wx.hideLoading();
-    }
+    },
+    requestImg() {
+      let that = this;
+      // 获取页面宽高度
+      wx.getSystemInfo({
+        success: function(res) {
+          console.log(res);
+          let windowWidth = res.windowWidth;
+          let imgMargin = that.imgMargin;
+          // 两列，每列的图片宽度
+          let imgWidth = (windowWidth - imgMargin * 3 - 12) / 2;
+          that.windowWidth = windowWidth;
+          that.windowHeight = res.windowHeight;
+          that.imgWidth = imgWidth;
+          that.$wxhttp
+            .get({
+              url: "/type",
+              data: {
+                recommend: that.$root.$mp.query.type
+              }
+            })
+            .then(res => {
+              console.log("成功数据:", res);
+              that.dataList = res.data;
+            })
+            .catch(err => {
+              console.log(`自动请求api失败 err:`, err);
+            });
+        }
+      });
+    },
 
     /** 预览图片 图片需使用外部链接*/
-    // previewImg: function(e) {
-    //   let index = e.currentTarget.dataset.index;
-    //   let currentSrc = "";
-    //   switch (e.currentTarget.dataset.type) {
-    //     case "1":
-    //       currentSrc = this.firstList[index].src;
+    previewImg: function(e) {
+      let index = e.currentTarget.dataset.index;
+      let currentSrc = "";
+      switch (e.currentTarget.dataset.type) {
+        case "1":
+          currentSrc = this.firstList[index].src;
 
-    //       break;
-    //     case "2":
-    //       currentSrc = this.secondList[index].src;
-    //   }
-    //   wx.previewImage({
-    //     urls: [currentSrc]
-    //   });
-    // }
+          break;
+        case "2":
+          currentSrc = this.secondList[index].src;
+      }
+      wx.previewImage({
+        urls: [currentSrc]
+      });
+    }
+  },
+  mounted() {
+    this.requestImg();
   },
   onLoad() {
     wx.showLoading({
       title: "加载中..."
     });
-
-    let that = this;
-    // 获取页面宽高度
-    wx.getSystemInfo({
-      success: function(res) {
-        console.log(res);
-        let windowWidth = res.windowWidth;
-        let imgMargin = that.imgMargin;
-        // 两列，每列的图片宽度
-        let imgWidth = (windowWidth - imgMargin * 3 - 12) / 2;
-        that.windowWidth = windowWidth;
-        that.windowHeight = res.windowHeight;
-        that.imgWidth = imgWidth;
-        // that.loadMoreImages(); // 初始化数据
-        that.$wxhttp
-          .get({
-            url: "/type",
-            data: {
-              recommend: that.$root.$mp.query.type
-            }
-          })
-          .then(res => {
-            console.log("成功数据:", res);
-            that.dataList = res.data;
-            for(let i = 0; i < that.dataList.length; i++){
-              that.dataList[i].src = "https://s1.ax1x.com/2020/05/04/YCY49f.png";
-              that.dataList[i].meaning = that.dataList[i].meaning.split("：")[1];
-            }
-          })
-          .catch(err => {
-            console.log(`自动请求api失败 err:`, err);
-          });
-      }
-    });
+  },
+  onUnload() {
+    this.dataList = [];
+    this.firstList = [];
+    this.secondList = [];
+    this.topArr = [0, 0];
   }
 };
 </script>

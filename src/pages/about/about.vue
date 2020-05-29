@@ -60,7 +60,9 @@
 .container-one {
   position: relative;
   width: 90%;
+  padding: 0 0 12px 0;
   margin: 0 auto;
+  margin-left: 18px;
 }
 
 .flower-icon {
@@ -165,7 +167,6 @@
 }
 .select-container {
   position: relative;
-  width: 100%;
   width: 53vw;
   height: 80vh;
 }
@@ -309,16 +310,7 @@ export default {
     return {
       pageCurrent: 1,
       selectCurrent: "趣味类",
-      flowerList: [
-        {
-          src: "https://s1.ax1x.com/2020/04/22/JN7PmT.png",
-          name: "茉莉花",
-          description: `茉莉喜温暖湿润和阳光
-                充足环境，叶色翠绿，
-                花朵颜色洁白，香气浓
-                郁，是最常见的芳香...`
-        }
-      ],
+      flowerList: [],
       moveRight: 0,
       viewHeight: "",
       itemCurrentA: 100,
