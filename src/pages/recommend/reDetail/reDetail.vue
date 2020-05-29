@@ -51,7 +51,7 @@
 
 <template>
   <div class="re-detail">
-    <h1 class="title">推荐详情</h1>
+    <h1 class="title">{{flowerType}}</h1>
     <div style="display: none">
       <img
         v-for="(item, index) in dataList"
@@ -114,6 +114,7 @@ export default {
   name: "flow",
   data() {
     return {
+      flowerType: "",
       dataList: [], // 数据源
       firstList: [], // 第一列数组
       secondList: [], // 第二列数组
@@ -215,6 +216,7 @@ export default {
     wx.showLoading({
       title: "加载中..."
     });
+    this.flowerType = this.$root.$mp.query.type;
   },
   onUnload() {
     this.dataList = [];
