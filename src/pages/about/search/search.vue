@@ -132,7 +132,7 @@
             class="fuzzy-item"
             v-for="(fuzzyItem, index) in fuzzyList"
             :key="index"
-            @click="toDetail(fuzzyItem.flowerId)"
+            @click="flowerName = fuzzyItem.name;toDetail(fuzzyItem.flowerId)"
           >{{fuzzyItem.name}}</div>
         </div>
       </div>
@@ -179,6 +179,8 @@
 </template>
 
 <script>
+import { isEmpty } from "../../../utils/dataHandle.js";
+
 export default {
   data() {
     return {
@@ -261,7 +263,7 @@ export default {
           flag = false;
         }
       }
-      if (flag) {
+      if (flag && !isEmpty(this.flowerName)) {
         this.historyList.push({ item: this.flowerName });
       }
       flag = true;
