@@ -21,8 +21,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% auto;
-
-  background-color: #f40;
 }
 .card0 .name {
   height: 2.5em;
@@ -31,8 +29,7 @@
   letter-spacing: 0.1em;
   font-weight: bold;
 }
-.card0 .meaning {
-  /* height: 2em; */
+.card0 .meaning {  
   line-height: 1.2em;
   font-size: 16px;
   text-indent: 2em;
