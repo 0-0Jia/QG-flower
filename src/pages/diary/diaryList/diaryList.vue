@@ -114,40 +114,6 @@ export default {
         );
       }
     },
-    // // 请求一张云存储的照片，获取临时地址
-    // upLoadImg(fileID) {
-    //   return new Promise((resolve, reject) => {
-    //     wx.cloud.downloadFile({
-    //       fileID: fileID, // 文件 ID
-    //       success: res => {
-    //         resolve(res.tempFilePath);
-    //       },
-    //       fail: console.error
-    //     });
-    //   });
-    // },
-    // // 请求全部云存储的照片
-    // upLoadImgList() {
-    //   let len = this.data.diaryList.length;
-    //   // 遍历日记
-    //   for (let i = 0; i < len; i++) {
-    //     let diary = this.data.diaryList[i];
-    //     // 判断日记有没有照片列表
-    //     if (!diary.imageList) {
-    //       continue;
-    //     }
-    //     let len2 = diary.imageList.length;
-    //     let promiseArr = [];
-    //     for (let j = 0; j < len2; j++) {
-    //       // 生成请求照片列表的promise对象
-    //       promiseArr.push(this.upLoadImg(diary.imageList[j]));
-    //     }
-    //     // 发送promise请求
-    //     Promise.all(promiseArr).then((res)=>{
-    //       diary.imgList = res;
-    //     });
-    //   }
-    // },
     // 去编辑界面
     toEdit(data) {
       store.commit("changeData", JSON.parse(JSON.stringify(data)));

@@ -174,7 +174,7 @@ export default {
         data: {
           page: this.page,
           pageSize: this.pageSize,
-          userId: 1 // 测试用户
+          // userId: 1 // 测试用户
         }
       };
       httpRequest.get(send).then(res => {
@@ -185,7 +185,7 @@ export default {
           } else {
             this.upLoadAllImg(res.data).then(() => {
               this.diaryData = this.diaryData.concat(res.data);
-              console.log(this.diaryData);
+              console.log('日记列表', this.diaryData);
               wx.hideLoading();
             });
           }

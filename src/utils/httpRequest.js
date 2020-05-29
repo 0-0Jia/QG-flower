@@ -1,6 +1,9 @@
 import store from '../store/index'
 // 接口地址
-const host = 'http://39.98.41.126:10021/flower/api/v1/'
+// const host = 'http://39.98.41.126:10021/flower/api/v1/'
+const host = 'https://qgflower.qgailab.com:10021/flower/api/v1/'
+
+
 // 获取token
 function getAccessToken() {
   return new Promise((resolve, reject) => {
