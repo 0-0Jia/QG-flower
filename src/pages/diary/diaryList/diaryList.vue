@@ -97,7 +97,8 @@ export default {
     // 处理时间
     handleTime(str) {
       if (!str) return;
-      let date = new Date(str);
+      let dateStr = (str.replace(/\-/g, "/")).split('.')[0];
+      let date = new Date(dateStr);
       let minute = date.getMinutes();
       let hour = date.getHours();
       let time = `${hour < 10 ? "0" + hour : hour}:${
@@ -123,7 +124,8 @@ export default {
   created () {
     // 初始化日期
     if (this.data.date) {
-      let date = new Date(this.data.date);
+      let dateStr = (this.data.date.replace(/\-/g, "/")).split('.')[0];
+      let date = new Date(dateStr);
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();

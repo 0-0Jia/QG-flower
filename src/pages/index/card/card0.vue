@@ -1,66 +1,40 @@
 <style scoped>
 .card0 {
+  max-height: 70vh;
   overflow-y: auto;
 }
 .card0 .month {
-  height: 6vh;
-  line-height: 6vh;
-  font-size: 4vh;
+  height: 1.5em;
+  line-height: 1.5em;
+  font-size: 25px;
 }
 .card0 .date {
-  height: 7vh;
-  line-height: 7vh;
-  font-size: 5.5vh;
+  height: 1.5em;
+  line-height: 1.5em;
+  font-size: 20px;
   font-weight: bold;
 }
 .card0 .img {
-  height: 40vh;
-  border-radius: 5px;
+  height: 10em;
+  width: 100%;
+  border-radius: 0.5em;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
 .card0 .name {
-  height: 10vh;
-  line-height: 12vh;
-  font-size: 5vh;
-  text-indent: 2vw;
+  height: 2.5em;
+  line-height: 3em;
+  font-size: 20px;
   letter-spacing: 0.1em;
-}
-.card0 .meaning {
-  height: 5vh;
-  line-height: 5vh;
-  font-size: 3vh;
-  text-indent: 2vw;
-}
-/* .card0 .introduce {
-  display: flex;
-  align-items: flex-start;
-  font-size: 14px;
-}
-.card0 .meaning {
-  display: flex;
-  align-items: flex-start;
-  margin-top: 0.5em;
-  font-size: 14px;
-}
-.card0 div .item {
-  display: block;
-  width: 20%;
   font-weight: bold;
-  text-align: center;
 }
-.card0 div .data {
-  display: block;
-  width: 80%;
-  overflow-y: auto;
+.card0 .meaning {  
+  line-height: 1.2em;
+  font-size: 16px;
+  text-indent: 2em;
+  text-align: justify;
 }
-.card0 .introduce .data {
-  max-height: 15vh;
-}
-.card0 .meaning .data {
-  max-height: 8vh;
-} */
 </style>
 
 <template>

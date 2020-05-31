@@ -61,7 +61,7 @@
   <div class="card1">
     <div class="list">
       <span class="item">简介</span>
-      <span class="data">{{cardData.description}}</span>
+      <span class="data" style="text-align: justify;">{{cardData.description}}</span>
     </div>
     <div class="list">
       <span class="item">科属</span>

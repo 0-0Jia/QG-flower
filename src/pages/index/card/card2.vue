@@ -18,6 +18,7 @@
   font-size: 15px;
   line-height: 1.5em;
   text-indent: 2em;
+  text-align: justify;
 }
 </style>
 

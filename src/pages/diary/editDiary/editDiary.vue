@@ -328,7 +328,8 @@ export default {
       return (Array(n).join(0) + num).slice(-n);
     },
     initTime() {
-      let date = new Date(store.state.data.time);
+      let dateStr = (store.state.data.time.replace(/\-/g, "/")).split('.')[0];
+      let date = new Date(dateStr);
       let year = date.getFullYear();
       let month = this.prefixInteger(date.getMonth() + 1, 2);
       let day = this.prefixInteger(date.getDate(), 2);
