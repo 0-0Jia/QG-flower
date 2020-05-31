@@ -190,7 +190,7 @@
           <img src="../../../../static/images/flower_group.png" class="flower-logo">
           <h1 class="detail-title">栽培技术</h1>
         </div>
-        <p class="text">{{flower.technique}}</p>
+        <p class="text"><text>{{flower.technique}}</text></p>
       </div>
     </div>
   </div>
@@ -238,7 +238,7 @@ export default {
       //                   话，可以不停的从5月底开到11月初。关键是
       //                   修剪、阳光、和肥水的掌握。`
       // }
-        flower: {
+      flower: {
         src: "",
         name: "",
         meaning: ``,
@@ -257,7 +257,8 @@ export default {
     };
   },
 
-  methods: {},
+  methods: {
+  },
   mounted() {
     wx.showLoading({
       title: "加载中..."
@@ -272,6 +273,9 @@ export default {
           console.log("成功数据:", res);
           wx.hideLoading();
           this.flower = res.data;
+            this.flower.technique.replace('\t', '\t');
+            this.flower.technique.replace('\r', '\r');
+            this.flower.technique.replace('\n', '\n');
         })
         .catch(err => {
           console.log(`自动请求api失败 err:`, err);
