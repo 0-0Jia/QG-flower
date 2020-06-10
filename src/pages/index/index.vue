@@ -8,58 +8,111 @@
   background-color: #f6faff;
 }
 .title {
-  width: 90%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0.5em 0;
+  width: 100%;
   font-size: 25px;
   font-weight: 500;
-  margin: 0.5em auto;
   text-align: left;
+  text-indent: 5%;
+  background-color: #f6faff;
+  z-index: 1;
 }
 .cardCon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 90vw;
-  height: 75vh;
-  transform: translate(-50%, -50%);
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f6faff;
+  transform: translateX(-125vw);
+  transition: transform 0.5s;
+  /* overflow-X: scroll; */
 }
-.cardCon .card {
+.cardCon .card1,
+.cardCon .card2,
+.cardCon .card3 {
   position: absolute;
   top: 0;
   left: 0;
-  padding: 2.5vh 2.5vw;
-  width: 80vw;
-  height: 70vh;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 0 #999;
-  transition: transform 0.5s;
+  width: 100vw;
+  height: 100vh;
+  background: #f6faff;
+  /* transition: transform 0.5s; */
+  overflow-y: auto;
 }
-.cardCon .show0 {
-  transform: translate(0, 0);
-  z-index: 3;
+.cardCon .left,
+.cardCon .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: 100vh;
+  background: rgba(237, 240, 244, 1);
+  color: rgba(0, 0, 0, 0.48);
 }
-.cardCon .show1 {
-  transform: translate(2.5vw, 2.5vh);
-  z-index: 2;
+.cardCon .left span,
+.cardCon .right span {
+  display: block;
+  width: 20vw;
+  font-size: 18px;
+  line-height: 1.5em;
 }
-.cardCon .show2 {
-  transform: translate(5vw, 5vh);
-  z-index: 1;
+
+.cardCon .left {
+  text-align: left;
+  padding-left: 5vw;
+  transform: translateX(0);
+}
+.cardCon .card1 {
+  transform: translateX(25vw);
+}
+.cardCon .card2 {
+  transform: translateX(125vw);
+}
+.cardCon .card3 {
+  transform: translateX(225vw);
+}
+.cardCon .right {
+  text-align: right;
+  padding-right: 5vw;
+  transform: translateX(325vw);
 }
 </style>
 
 <template>
   <div class="day">
     <h1 class="title">一日一花</h1>
-    <div class="cardCon" @touchstart="touchStartFun" @touchend="touchEndFun">
-      <div class="card" :class="{'show0':0==showIndex,'show1':2==showIndex,'show2':1==showIndex,}">
-        <card0 :cardData="cardData"></card0>
+    <div
+      class="cardCon"
+      :style="{transform: translate}"
+      @touchstart="touchStartFun"
+      @touchend="touchEndFun"
+    >
+      <div class="left">
+        <span>来</span>
+        <span>日</span>
+        <span>可</span>
+        <span>期</span>
       </div>
-      <div class="card" :class="{'show0':1==showIndex,'show1':0==showIndex,'show2':2==showIndex,}">
-        <card1 :cardData="cardData"></card1>
+      <div class="card1">
+        <card0 :cardData="cardData" :index="1"></card0>
       </div>
-      <div class="card" :class="{'show0':2==showIndex,'show1':1==showIndex,'show2':0==showIndex,}">
-        <card2 :cardData="cardData"></card2>
+      <div class="card2">
+        <card0 :cardData="cardData" :index="2"></card0>
+      </div>
+      <div class="card3">
+        <card0 :cardData="cardData" :index="3"></card0>
+      </div>
+      <div class="right">
+        <span>前</span>
+        <span>日</span>
+        <span>不</span>
+        <span>可</span>
+        <span>追</span>
       </div>
     </div>
   </div>
@@ -92,18 +145,33 @@ export default {
         // type: '观花类',
         // recommend: '婚礼鲜花'
       },
-      showIndex: 0,
+      showIndex: 1,
       touchStartX: null,
-      touchEndX: null
+      touchEndX: null,
+      eventLimit: false
     };
   },
-
+  computed: {
+    translate() {
+      if (this.showIndex == 0) {
+        return `translateX(0)`;
+      } else if (this.showIndex == 1) {
+        return `translateX(-25vw)`;
+      } else if (this.showIndex == 2) {
+        return `translateX(-125vw)`;
+      } else if (this.showIndex == 3) {
+        return `translateX(-225vw)`;
+      } else if (this.showIndex == 4) {
+        return `translateX(-250vw)`;
+      }
+      return `translateX(0)`;
+    }
+  },
   components: {
     card0,
     card1,
     card2
   },
-
   methods: {
     getData() {
       wx.showLoading({
@@ -123,12 +191,10 @@ export default {
     },
     touchStartFun(event) {
       event.preventDefault();
-      //console.log('触摸开始'+event.mp.touches[0].pageX)
       this.touchStartX = event.mp.touches[0].pageX;
     },
     touchEndFun(event) {
       event.preventDefault();
-      //console.log('触摸介绍'+ event.mp.changedTouches[0].pageX)
       this.touchEndX = event.mp.changedTouches[0].pageX;
       this.touchChangePage();
     },
@@ -139,14 +205,46 @@ export default {
         // 点击
         return;
       }
-      let nowIndex = this.showIndex;
+      if (this.eventLimit) {
+        return;
+      }
+      this.eventLimit = true;
       if (distance > 0) {
         // 右滚
-        this.showIndex = (nowIndex + 5) % 3;
+        if (this.showIndex == 0) {
+          return;
+        }
+        this.showIndex--;
+        if (this.showIndex == 0) {
+          setTimeout(() => {
+            this.showIndex++;
+            setTimeout(() => {
+              this.eventLimit = false;
+            }, 500);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            this.eventLimit = false;
+          }, 500);
+        }
       } else {
         // 左滚
-        this.showIndex = (nowIndex + 1) % 3;
-        // this.showIndex = (nowIndex + 5) % 3;
+        if (this.showIndex == 4) {
+          return;
+        }
+        this.showIndex++;
+        if (this.showIndex == 4) {
+          setTimeout(() => {
+            this.showIndex--;
+            setTimeout(() => {
+              this.eventLimit = false;
+            }, 500);
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            this.eventLimit = false;
+          }, 500);
+        }
       }
       console.log(this.showIndex);
     }
