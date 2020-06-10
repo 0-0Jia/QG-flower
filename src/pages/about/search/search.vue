@@ -227,6 +227,7 @@ export default {
     },
     toDetail(flowerId) {
       this.fuzzyShow = false;
+      this.haveHistory = true;
       this.flowerStorage();
       mpvue.navigateTo({
         url: "../aboutDetail/main?flowerId=" + flowerId
