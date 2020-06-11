@@ -99,13 +99,13 @@
         <span>期</span>
       </div>
       <div class="card1">
-        <card0 :cardData="cardData" :index="1"></card0>
+        <card0 v-if='cardData1' :cardData="cardData1" :index="1"></card0>
       </div>
       <div class="card2">
-        <card0 :cardData="cardData" :index="2"></card0>
+        <card0 v-if='cardData2' :cardData="cardData2" :index="2"></card0>
       </div>
       <div class="card3">
-        <card0 :cardData="cardData" :index="3"></card0>
+        <card0 v-if='cardData3' :cardData="cardData3" :index="3"></card0>
       </div>
       <div class="right">
         <span>前</span>
@@ -126,25 +126,9 @@ import httpRequest from "../../utils/httpRequest.js";
 export default {
   data() {
     return {
-      cardData: {
-        // flowerId: 1,
-        // name: '茉莉花',
-        // src: 'http://img5.imgtn.bdimg.com/it/u=3905026749,806656350&fm=26&gp=0.jpg',
-        // description: '茉莉喜温暖湿润和阳光充足环境，叶色翠绿，花朵颜色洁白，香气浓郁，是最常见的芳香性盆栽花木。在素馨属中，最著名的一种是双瓣茉莉，也就是人们平常俗称的茉莉花。茉莉有着良好的保健和美容功效，可以用来饮食，可用于茉莉花茶的制作。茉莉花是菲律宾、突尼斯、印尼的国花，象征着爱情和友谊。',
-        // meaning: '你是我的生命',
-        // family: '木犀科素馨属',
-        // reproduction: '扦插、压条',
-        // fruitStage: '花期6~10月',
-        // environment: {
-        //   sun :'全日照或半日照，喜光，稍耐阴。',
-        //   temperature: '适温22℃~33℃，喜高温，不耐寒。',
-        //   soil: '喜富含腐殖质的微酸性砂质壤土。',
-        //   water: '喜湿润，不耐干旱。',
-        // },
-        // technique: '盆栽茉莉花：盛夏季每天要早、晚浇水，如空气干燥，需补充喷水；冬季休眠期，要控制浇水量，如盆土过湿，会引起烂根或落叶。生长期间需要每周施稀薄饼肥一次。春季换盆后，要经常摘心整形，盛花期后，要重剪，以利萌发新枝，使植株整齐健壮，开花旺盛。从6月至9月开花期勤施含磷较多的液肥，最好每2—3天施一次，肥料可用腐熟好的豆饼和鱼腥水肥液，或者用硫酸铵、过磷酸钙，一般化肥成分兑多了会烧死茉莉植株。也可以用0.l%磷酸二氢钾水溶液，在傍晚向叶面喷洒，也可促其多开花。茉莉花极喜肥，只要养护得当，盆栽茉莉一年可以开三次花。如果是肥料不足、养分不够，开一次花后，就不再开花了。管理到位的话，可以不停的从5月底开到11月初。关键是修剪、阳光、和肥水的掌握。',
-        // type: '观花类',
-        // recommend: '婚礼鲜花'
-      },
+      cardData1: null,
+      cardData2: null,
+      cardData3: null,
       showIndex: 1,
       touchStartX: null,
       touchEndX: null,
@@ -184,7 +168,9 @@ export default {
         console.log(res);
         wx.hideLoading();
         if (res.code == 1) {
-          this.cardData = res.data;
+          this.cardData1 = res.data[0];
+          this.cardData2 = res.data[1];
+          this.cardData3 = res.data[2];
         } else {
         }
       });
