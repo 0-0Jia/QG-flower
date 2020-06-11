@@ -104,14 +104,16 @@ export default {
       mpvue.navigateTo({ url: "../diary/addDiary/main?type=add" });
     },
     // 请求一张云存储的照片，获取临时地址
-    upLoadImg(fileID) {
+    upLoadImg(fileID, diary, index) {
       // fileID --> 一张照片的 fileID
       return new Promise((resolve, reject) => {
         wx.cloud.downloadFile({
           fileID: fileID, // 文件 ID
           success: res => {
-            resolve(res.tempFilePath);
-            // 返回 临时地址
+            // 将临时地址放到日记的图片列表里面
+            diary.imgList[index] = res.tempFilePath;
+            resolve();
+            
           },
           fail: console.error
         });
@@ -157,8 +159,29 @@ export default {
       return new Promise((resolve, reject) => {
         let len = diaryData.length;
         let promiseArr = [];
+        // for (let i = 0; i < len; i++) {
+        //   promiseArr.push(this.upLoadDayImg(diaryData[i].diaryList));
+        // }
         for (let i = 0; i < len; i++) {
-          promiseArr.push(this.upLoadDayImg(diaryData[i].diaryList));
+          // diaryList --> 一天的日记
+          let diaryList = diaryData[i].diaryList;
+          let len2 = diaryList.length;
+          for (let j = 0; j < len2; j++) {
+            // diary --> 一天日记里面的 一篇日记
+            let diary = diaryList[j];
+            let imageList = diary.imageList;
+            if(!imageList) {
+              continue;
+            }
+            diary.imgList = []; // 初始化日记图片临时地址列表
+            let len3 = imageList.length;
+            for(let k = 0; k < len3; k++) {
+              // fileID --> 一天日记里面的 一篇日记的 一张图片的fileID
+              let fileID = diary.imageList[k];
+              promiseArr.push(this.upLoadImg(fileID, diary, k));
+            }
+            //promiseArr.push(this.upLoadDiaryImg(diaryData[i].diaryList[j]));
+          }
         }
         Promise.all(promiseArr).then(res => {
           // 全部日记，已经拥有了临时照片地址列表imgList
