@@ -170,7 +170,7 @@
             class="search-item"
             v-for="(flower, index) in historyList"
             :key="index"
-            @click="searchByName"
+            @click="searchByName(flower.item)"
           >{{flower.item}}</div>
         </div>
       </div>
@@ -185,6 +185,7 @@ export default {
   data() {
     return {
       flowerName: "",
+      flowerId: 0,
       fuzzyList: [],
       hotList: [],
       historyList: [],
@@ -234,9 +235,23 @@ export default {
       });
       this.fuzzyShow = false;
     },
-    searchByName() {
+    searchByName(flowerName) {
+      let that = this;
       this.fuzzyShow = false;
-      this.toDetail();
+      this.$wxhttp
+        .get({
+          url: "/flower/flowerName",
+          data: {
+            flowerName: flowerName
+          }
+        })
+        .then(res => {
+          console.log("/flower/flowerName成功数据:", res);
+          that.toDetail(res.data);        
+        })
+        .catch(err => {
+          console.log(`自动请求api失败 err:`, err);
+        });
     },
     deleteHistory() {
       let that = this;
@@ -267,7 +282,7 @@ export default {
 
       if (flag && !isEmpty(this.flowerName)) {
         this.historyList.push({ item: this.flowerName });
-      }else {
+      } else {
         return false;
       }
       flag = true;

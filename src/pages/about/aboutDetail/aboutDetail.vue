@@ -271,11 +271,10 @@ export default {
         })
         .then(res => {
           console.log("成功数据:", res);
-          wx.hideLoading();
+          wx.hideLoading();         
+          res.data.technique.replace('\n', `\n`);
           this.flower = res.data;
-            this.flower.technique.replace('\t', '\t');
-            this.flower.technique.replace('\r', '\r');
-            this.flower.technique.replace('\n', '\n');
+          console.log(this.flower.technique)
         })
         .catch(err => {
           console.log(`自动请求api失败 err:`, err);
