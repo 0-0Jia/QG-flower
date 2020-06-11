@@ -97,7 +97,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-.bottom .intrHide {
+.bottom .dataHide {
   display: -webkit-box;
 } 
 </style>
@@ -119,11 +119,11 @@
     <div class="bottom">
       <div class="meaning">
         <div class="item">花语</div>
-        <div class="data">{{cardData.meaning}}</div>
+        <div class="data" :class="{dataHide:meanHide}" @click="meanHide=!meanHide">{{cardData.meaning?cardData.meaning:'暂无'}}</div>
       </div>
       <div class="introduce">
         <div class="item">简介</div>
-        <div class="data" :class="{intrHide:intrHide}" @click="intrHide=!intrHide">{{cardData.description}}</div>
+        <div class="data" :class="{dataHide:intrHide}" @click="intrHide=!intrHide">{{cardData.description?cardData.description:'暂无'}}</div>
       </div>
     </div>
 
@@ -144,6 +144,7 @@ export default {
     return {
       month: "",
       date: "",
+      meanHide: true,
       intrHide: true
     };
   },

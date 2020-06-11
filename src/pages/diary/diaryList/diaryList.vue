@@ -39,6 +39,9 @@
   -webkit-box-orient: vertical;
 }
 .list1 .imgList {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   margin: 0.3em 0;
 }
 .list1 .time {
@@ -48,7 +51,7 @@
 }
 .imgList .img {
   display: inline-block;
-  margin: 0 1vw;
+  margin: 0.2em 1vw;
   width: 20vw;
   height: 20vw;
   overflow: hidden;
@@ -68,12 +71,18 @@
       <div class="list1" @click="toEdit(item)" v-for="(item, index) in data.diaryList" :key="index">
         <div class="diaryStr">{{item.content}}</div>
         <div class="imgList">
-          <div
+          <!-- <div
             v-for="(url, index2) in item.imgList"
             :key="index2"
             class="img"
             :style="{'background-image':'url('+url+')'}"
-          ></div>
+          ></div> -->
+          <image  v-for="(url, index2) in item.imgList"
+            :key="index2"
+            mode='heightFix'
+            class="img"
+            :src='url'
+          ></image>
         </div>
         <div class="time">{{item.formatTime}}</div>
       </div>

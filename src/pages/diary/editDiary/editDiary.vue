@@ -50,13 +50,14 @@
 }
 .con .imgList {
   display: flex;
-  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   margin: 2em auto;
 }
 .imgList .img {
   position: relative;
   display: inline-block;
-  margin: 0 2vw;
+  margin: 0.2em 2vw;
   width: 25vw;
   height: 25vw;
   border-radius: 4px;
@@ -109,14 +110,17 @@
     <div class="con">
       <textarea v-model="content" ref="content" class="content" placeholder="记录下今天的种花小点滴吧~"></textarea>
       <div class="imgList">
-        <div
+        <!-- <div
           class="img"
           v-for="(url, index) in images"
           :key="index"
           :style="{'background-image':'url('+url+')'}"
         >
           <span class="remove" @click="removeImg(index)">-</span>
-        </div>
+        </div> -->
+        <image class="img" v-for="(url, index) in images" :key="index" mode='heightFix' :src='url'> 
+          <span class="remove" @click="removeImg(index)">-</span>
+        </image>
         <div :style="addShow?'':'display:none;'" class="add" @click="addImg">+</div>
       </div>
     </div>
@@ -294,7 +298,7 @@ export default {
             });
             this.$wxhttp
               .Delete({
-                url: `diary/${this.diaryId}`,
+                url: `diary/${this.diaryId}`
               })
               .then(res => {
                 wx.hideLoading();
@@ -328,7 +332,7 @@ export default {
       return (Array(n).join(0) + num).slice(-n);
     },
     initTime() {
-      let dateStr = (store.state.data.time.replace(/\-/g, "/")).split('.')[0];
+      let dateStr = store.state.data.time.replace(/\-/g, "/").split(".")[0];
       let date = new Date(dateStr);
       let year = date.getFullYear();
       let month = this.prefixInteger(date.getMonth() + 1, 2);

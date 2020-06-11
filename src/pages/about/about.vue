@@ -7,7 +7,7 @@
   height: 100vh;
   background-color: #f5f5f5;
   font-family: 微软雅黑;
-  transition: left 1s;
+  transition: left 0.7s;
   z-index: -2;
 }
 
