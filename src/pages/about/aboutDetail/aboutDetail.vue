@@ -191,7 +191,7 @@
           <img src="../../../../static/images/flower_group.png" class="flower-logo">
           <h1 class="detail-title">栽培技术</h1>
         </div>
-        <p class="text"><text v-html="flower.technique"></text></p>
+        <p class="text"><text>{{flower.technique}}</text></p>
       </div>
     </div>
   </div>
