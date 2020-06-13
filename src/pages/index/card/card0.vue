@@ -1,5 +1,5 @@
 <style scoped>
-@import "../../../style/flower.wxss";
+@import "../../../style/flower2.wxss";
 /* @font-face {
   font-family: "flower";
   src: url(../../../../static/font/flower.ttf);
@@ -64,8 +64,8 @@
 .center .name {
   width: 1em;
   /* height: 5em; */
-  line-height: 1.1em;
-  font-size: 40px;
+  line-height: 1.2em;
+  font-size: 35px;
   font-family: "flower";
 }
 
